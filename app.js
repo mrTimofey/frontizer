@@ -15,8 +15,11 @@ app.get(/^\/(.*)$/, function(req, res) {
 	
 	fs.exists('./data/' + reqPath + '.js', function(exists) {
 		var data = {};
-		if (exists)
+		if (exists) {
 			data = require('./data/' + reqPath);
+			delete require.cache[require.resolve('./data/' + reqPath)];
+		}
+		data.__livereload = '<script src="//localhost:35729/livereload.js"></script>';
 		res.render(reqPath, data);
 	});
 });

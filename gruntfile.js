@@ -30,9 +30,9 @@ module.exports = function(grunt) {
 				tasks: ['copy'],
 				options: { livereload: true }
 			},
-			// changes in views and css (after sass and autoprefixer)
+			// changes in views, data and css (after sass and autoprefixer)
 			views: {
-				files: ['views/**/*', 'public/css/**/*.css'],
+				files: ['views/**/*', 'data/**/*', 'public/css/**/*.css'],
 				options: { livereload: true }
 			}
 		}
