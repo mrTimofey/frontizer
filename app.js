@@ -1,12 +1,11 @@
 var express = require('express'),
-	handlebars = require('express3-handlebars'),
 	path = require('path'),
-	fs = require('fs');
+	fs = require('fs'),
+	engine = require('./engine.js');
 
 var app = express();
 
-app.engine('htm', handlebars({ defaultLayout: 'main', extname: '.htm' }));
-app.set('view engine', 'htm');
+engine.init(app);
 app.use(express.static(__dirname + '/public'));
 
 app.get(/^\/(.*)$/, function(req, res) {
