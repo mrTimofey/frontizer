@@ -5,7 +5,7 @@
   "main": "app.js",
   "dependencies": {
     "express": "latest",
-    "express3-handlebars": "latest",
+    "express-handlebars": "latest",
     "grunt": "latest",
     "grunt-contrib-watch": "latest",
     "grunt-sass": "latest",
