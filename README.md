@@ -1,3 +1,5 @@
+# OUTDATED NOW, WILL BE UPDATED SOON!
+
 # Node.js Boilerplate
 Frontend Node.js based boilerpalte.
 
