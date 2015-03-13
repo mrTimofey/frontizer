@@ -8,7 +8,7 @@ var app = express();
 app.set('view engine', 'jade');
 app.use(favicon(__dirname + '/assets/favicon.ico'));
 app.use('/assets', express.static(__dirname + '/public'));
-app.use('/assets/static', express.static(__dirname + '/assets/statics'));
+app.use('/assets/static', express.static(__dirname + '/assets/static'));
 app.use('/assets/fonts', express.static(__dirname + '/assets/fonts'));
 
 app.get(/^\/(.*)$/, function(req, res) {
