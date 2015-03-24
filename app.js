@@ -23,6 +23,8 @@ var app = express(),
 livereloadServer.watch(__dirname + '/public');
 
 app.set('view engine', 'jade');
+// allows absolute path in extends for jade
+app.locals.basedir = app.get('views');
 app.use(favicon(__dirname + '/assets/favicon.ico'));
 app.use('/assets', express.static(__dirname + '/public'));
 app.use('/assets/static', express.static(__dirname + '/assets/static'));
