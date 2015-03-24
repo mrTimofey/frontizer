@@ -21,7 +21,8 @@ npm install
 
 Create files "assets/js/main.js" and "assets/styles/main.styl".
 
-Default configuration is stored in "config.deafult.json". You can create "config.json" file and reqrite any option from default configuration.
+Default configuration is stored in "config.deafult.json".
+You can create "config.json" file and rewrite any option from default configuration.
 
 Configuration options are:
 * appPort - application port
