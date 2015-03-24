@@ -32,8 +32,8 @@ app.use('/assets/fonts', express.static(__dirname + '/assets/fonts'));
 
 /**
  * Lookups all data files and merges them into one object.
- * @param {Object} path request path
- * @param {Object} after callback to call after data is collected; data passes as parameter
+ * @param {String} path request path
+ * @param {Function} after callback to call after data is collected; data passes as parameter
  */
 function lookupData(path, after) {
 	path = (path && path != 'home') ? path.split('/') : [];
