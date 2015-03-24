@@ -21,6 +21,12 @@ npm install
 
 Create files "assets/js/main.js" and "assets/styles/main.styl".
 
+Default configuration is stored in "config.deafult.json". You can create "config.json" file and reqrite any option from default configuration.
+
+Configuration options are:
+* appPort - application port
+* livereloadPort - port for livereload server
+
 ## Starting and CLI
 
 Open console and change current directory to the project than execute
@@ -29,9 +35,8 @@ Open console and change current directory to the project than execute
 npm run start
 ```
 
-This will run all related tasks and your project will be available at 3000 port. Also port 35729 will be used for livereload feature.
-
-Port configuration will be available soon.
+This will run all related tasks and your project will be available at 3000 port by default.
+Port 35729 will be used for livereload server by default.
 
 To run jshint execute
 

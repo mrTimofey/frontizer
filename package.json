@@ -24,7 +24,6 @@
     "js": "browserify -t debowerify assets/js/main.js > public/main.js",
     "styles:watch": "watch \"npm run styles\" assets/styles/ --wait=0.1",
     "js:watch": "watch \"npm run js\" assets/js/ --wait=0.1",
-    "livereload": "livereload public -p 35729 -i 100",
-    "start": "parallelshell \"npm run styles:watch\" \"npm run js:watch\" \"npm run livereload\" \"node app.js\""
+    "start": "parallelshell \"npm run styles:watch\" \"npm run js:watch\" \"node app.js\""
   }
 }

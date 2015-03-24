@@ -1,9 +1,26 @@
 var express = require('express'),
+	livereload = require('livereload'),
 	path = require('path'),
 	fs = require('fs'),
-	favicon = require('serve-favicon');
+	favicon = require('serve-favicon'),
+	config = require('./config.default.json');
 
-var app = express();
+try {
+	customConfig = require('./config.json');
+	Object.keys(customConfig).forEach(function(k) {
+		config[k] = customConfig[k];
+	});
+}
+catch(e) { console.log('Using default config file only'); }
+
+var app = express(),
+	livereloadServer = livereload.createServer({
+		port: config.livereloadPort,
+		exts: ['css', 'js'],
+		interval: 100
+	});
+
+livereloadServer.watch(__dirname + '/public');
 
 app.set('view engine', 'jade');
 app.use(favicon(__dirname + '/assets/favicon.ico'));
@@ -21,7 +38,7 @@ app.get(/^\/(.*)$/, function(req, res) {
 			data = require('./data/' + reqPath);
 			delete require.cache[require.resolve('./data/' + reqPath)];
 		}
-		data.__livereload = '//' + req.hostname + ':35729/livereload.js';
+		data.__livereload = '//' + req.hostname + ':' + config.livereloadPort + '/livereload.js';
 		data.__css = '/assets/main.css';
 		data.__js = '/assets/main.js';
 		data.static = function(path) {
@@ -43,4 +60,4 @@ app.get(/^\/(.*)$/, function(req, res) {
 	});
 });
 
-app.listen(3000);
+app.listen(config.appPort);
