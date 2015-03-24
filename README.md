@@ -67,7 +67,10 @@ Use function *static(path)* in your jade tempates for static URLs. Path argument
 
 You can pass variables to templates using files named same as templates but inside "data" directory. Available variables are *module.exports* object properties.
 
-Example: "/about/career" request will be handled with "views/about/career.jade" template with data defined in "data/about/career.js" in *module.exports*.
+Data files from home to each segment in URI will be merged. If some object property has same name with upper level data object then this property will be rewritten. 
+
+Example: "/about/career" request will be handled with data defined in *module.exports* inside files "home.js", "about.js", "about/career.js" in "data" directory.
+If there is a property *title* both in "home.js" and "about.js" then *title* from "about.js" will be availabe in template.
 
 ## Livereload
 
