@@ -28,30 +28,57 @@ app.use('/assets', express.static(__dirname + '/public'));
 app.use('/assets/static', express.static(__dirname + '/assets/static'));
 app.use('/assets/fonts', express.static(__dirname + '/assets/fonts'));
 
+/**
+ * Lookups all data files and merges them into one object.
+ * @param {Object} path request path
+ * @param {Object} after callback to call after data is collected; data passes as parameter
+ */
+function lookupData(path, after) {
+	path = (path && path != 'home') ? path.split('/') : [];
+	if (path[0] == 'home') path.shift();
+	
+	// concatenate path segments
+	path = path.map(function(el) {
+		this.prefix += '/' + el;
+		return this.prefix;
+	}, { prefix: '' });
+	
+	// always fetch home data
+	path.unshift('/home');
+	
+	data = {};
+	
+	// function checks data file existance, merges data and
+	// calls itself again until path array exhausted
+	(function next() {
+		if (!path.length) return after(data);
+		var file = './data' + path.shift();
+		fs.exists(file +'.js', function(exists) {
+			if (exists) {
+				var fileData = require(file);
+				delete require.cache[require.resolve(file)];
+				Object.keys(fileData).forEach(function(k) {
+					data[k] = fileData[k];
+				});
+			}
+			next();
+		});
+	})();
+}
+
 app.get(/^\/(.*)$/, function(req, res) {
 	var reqPath = req.params[0];
 	if (reqPath === '') reqPath = 'home';
 	
-	fs.exists('./data/' + reqPath + '.js', function(exists) {
-		var data = {};
-		if (exists) {
-			data = require('./data/' + reqPath);
-			delete require.cache[require.resolve('./data/' + reqPath)];
-		}
+	lookupData(reqPath, function(data) {
 		data.__livereload = '//' + req.hostname + ':' + config.livereloadPort + '/livereload.js';
 		data.__css = '/assets/main.css';
 		data.__js = '/assets/main.js';
-		data.static = function(path) {
-			return '/assets/static/' + path;
-		};
+		data.static = function(path) { return '/assets/static/' + path; };
 		try {
 			res.render(reqPath, data, function(err, output) {
-				if (err) {
-					res.status(404).end(err.toString());
-				}
-				else {
-					res.end(output);
-				}
+				if (err) res.status(404).end(err.toString());
+				else res.end(output);
 			});
 		}
 		catch (e) {
