@@ -7,7 +7,7 @@ It can be used for fast frontend project development.
 Modules involved:
 * Request handling: [Express](http://expressjs.com)
 * Templating: [Jade](http://jade-lang.com)
-* Styles: [Stylus](http://learnboost.github.io/stylus/) with [nib](http://nibstyl.us) and [autoprefixer-stylys](https://github.com/jenius/autoprefixer-stylus)
+* Styles: [Stylus](http://learnboost.github.io/stylus/) with [nib](http://nibstyl.us) and [autoprefixer-stylus](https://github.com/jenius/autoprefixer-stylus)
 * Client scripts: [Browserify](http://browserify.org), [Bower](http://bower.io), [Debowerify](https://github.com/eugeneware/debowerify), [jshint](http://jshint.com)
 * Utility: [Livereload](https://github.com/napcs/node-livereload), [Watch](https://github.com/mikeal/watch), [Parallelshell](https://github.com/keithamus/parallelshell), [Serve-favicon](https://github.com/expressjs/serve-favicon)
 
