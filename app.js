@@ -76,6 +76,7 @@ app.get(/^\/(.*)$/, function(req, res) {
 		data.__livereload = '//' + req.hostname + ':' + config.livereloadPort + '/livereload.js';
 		data.__css = '/assets/main.css';
 		data.__js = '/assets/main.js';
+		data.req = req;
 		data.static = function(path) { return '/assets/static/' + path; };
 		try {
 			res.render(reqPath, data, function(err, output) {
