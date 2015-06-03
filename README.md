@@ -63,7 +63,13 @@ Use *script(src=__js)* and *link(rel="stylesheet" href=__css)* to include compil
 
 Use function *static(path)* in your jade tempates for static URLs. Path argument must not contain leading slash.
 
-## Template data
+## Views helpers
+
+* range([from], to) - generates an array of numbers from first parameter to second; first parameter can be emitted so it will be equal to 1 by default. Examples:
+  * range(3, 5) -> [3, 4, 5]
+  * range(5) -> [1, 2, 3, 4, 5]
+
+## Views data
 
 You can pass variables to templates using files named same as templates but inside "data" directory. Available variables are *module.exports* object properties.
 
