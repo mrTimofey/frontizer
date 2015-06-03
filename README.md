@@ -7,7 +7,7 @@ It can be used for fast frontend project development.
 Modules involved:
 * Request handling: [Express](http://expressjs.com)
 * Templating: [Jade](http://jade-lang.com)
-* Styles: [Stylus](http://learnboost.github.io/stylus/) with [nib](http://nibstyl.us) and [autoprefixer-stylus](https://github.com/jenius/autoprefixer-stylus)
+* Styles: [Stylus](http://learnboost.github.io/stylus/) with [kouto-swiss](http://kouto-swiss.io)
 * Client scripts: [Browserify](http://browserify.org), [Bower](http://bower.io), [Debowerify](https://github.com/eugeneware/debowerify), [jshint](http://jshint.com)
 * Utility: [Livereload](https://github.com/napcs/node-livereload), [Watch](https://github.com/mikeal/watch), [Parallelshell](https://github.com/keithamus/parallelshell), [Serve-favicon](https://github.com/expressjs/serve-favicon)
 
@@ -45,23 +45,23 @@ To run jshint execute
 npm run jshint
 ```
 
-## Templates
+## Views
 
-All template files must be stored inside "views" directory. Their names will be used in routing.
+All views files must be stored inside "views" directory. Their names will be used in routing.
 
-Example: "/about/career" request will be handled with "views/about/career.jade" template.
+Example: "/about/career" request will be handled with "views/about/career.jade" view.
 
-If corresponding template is not found then you will see error page with 404 status.
+If corresponding view file is not found then you will see error page with 404 status.
 
-For the front page create "home.jade" template.
+For the front page create "home.jade" view.
 
 ## Assets and static files
 
 Project assets and statics are stored in "assets" directory with obviously named directories inside.
 
-Use *script(src=__js)* and *link(rel="stylesheet" href=__css)* to include compiled scripts and styles.
+Use *script(src=__js)* and *link(rel="stylesheet" href=__css)* to include compiled scripts and styles within your views.
 
-Use function *static(path)* in your jade tempates for static URLs. Path argument must not contain leading slash.
+Use function *static(path)* in your views for static URLs. Path argument must not contain leading slash.
 
 ## Views helpers
 
@@ -71,19 +71,22 @@ Use function *static(path)* in your jade tempates for static URLs. Path argument
 
 ## Views data
 
-You can pass variables to templates using files named same as templates but inside "data" directory. Available variables are *module.exports* object properties.
+You can pass variables to views using files named same as views but inside "data" directory. Available variables are *module.exports* object properties.
 
 Data files from home to each segment in URI will be merged. If some object property has same name with upper level data object then this property will be rewritten. 
 
 Example: "/about/career" request will be handled with data defined in *module.exports* inside files "home.js", "about.js", "about/career.js" in "data" directory.
-If there is a property *title* both in "home.js" and "about.js" then *title* from "about.js" will be availabe in template.
+If there is a property *title* both in "home.js" and "about.js" then *title* from "about.js" will be availabe in view.
 
 ## Livereload
 
-To enable livereload feature just include *script(src=__livereload)* in your jade templates.
+To enable livereload feature just include *script(src=__livereload)* in view.
 
 ## Bower components
 
-You can use bower to install client-side dependencies. To include them in your scripts you can use *require* function provided by browserify. Debowerify allows you to include bower components by using just *require(<component name>)* without path (e.g. *require('jquery')*) 
+You can use bower to install client-side dependencies.
+To include them in your scripts you can use *require* function provided by browserify.
+Debowerify allows you to include bower components by using just *require(<component name>)* without path
+(e.g. *require('jquery')*) 
 
 Use "./some-script.js" to include local script files inside "assets/js" directory.

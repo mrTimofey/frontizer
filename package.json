@@ -4,8 +4,7 @@
     "express": "latest",
     
     "stylus": "latest",
-    "nib": "latest",
-    "autoprefixer-stylus": "latest",
+    "kouto-swiss": "latest",
     
     "browserify": "latest",
     "bower": "latest",
@@ -21,7 +20,7 @@
   },
   "scripts": {
     "jshint": "jshint assets/js",
-    "styles": "stylus assets/styles/main.styl -r -m -u nib -u autoprefixer-stylus -o public",
+    "styles": "stylus assets/styles/main.styl -r -u kouto-swiss -o public",
     "js": "browserify -t debowerify assets/js/main.js > public/main.js",
     "styles:watch": "watch \"npm run styles\" assets/styles/ --wait=0.1",
     "js:watch": "watch \"npm run js\" assets/js/ --wait=0.1",
