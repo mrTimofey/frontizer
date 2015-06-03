@@ -38,18 +38,18 @@ app.use('/assets/fonts', express.static(__dirname + '/assets/fonts'));
 function lookupData(path, after) {
 	path = (path && path != 'home') ? path.split('/') : [];
 	if (path[0] == 'home') path.shift();
-	
+
 	// concatenate path segments
 	path = path.map(function(el) {
 		this.prefix += '/' + el;
 		return this.prefix;
 	}, { prefix: '' });
-	
+
 	// always fetch home data
 	path.unshift('/home');
-	
+
 	data = {};
-	
+
 	// function checks data file existance, merges data and
 	// calls itself again until path array exhausted
 	(function next() {
@@ -68,16 +68,33 @@ function lookupData(path, after) {
 	})();
 }
 
+function range(from, to) {
+	if (!to){
+		to = from;
+		from = 0;
+	}
+	to = Math.ceil(to);
+	from = Math.ceil(from);
+	var a = [];
+	while (from++ < to) a.push(from);
+	return a;
+}
+
+function static(path) {
+	return '/assets/static/' + path;
+}
+
 app.get(/^\/(.*)$/, function(req, res) {
 	var reqPath = req.params[0];
 	if (reqPath === '') reqPath = 'home';
-	
+
 	lookupData(reqPath, function(data) {
 		data.__livereload = '//' + req.hostname + ':' + config.livereloadPort + '/livereload.js';
 		data.__css = '/assets/main.css';
 		data.__js = '/assets/main.js';
 		data.req = req;
-		data.static = function(path) { return '/assets/static/' + path; };
+		data.static = static;
+		data.range = range;
 		try {
 			res.render(reqPath, data, function(err, output) {
 				if (err) res.status(404).end(err.toString());
