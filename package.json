@@ -1,29 +1,25 @@
 {
-  "name": "boilerplate",
-  "dependencies": {
-    "express": "latest",
-    
-    "stylus": "latest",
-    "kouto-swiss": "latest",
-    
-    "browserify": "latest",
-    "bower": "latest",
-    "debowerify": "latest",
-    "jshint": "latest",
-    
-    "jade": "latest",
-    
-    "livereload": "latest",
-    "watch": "latest",
-    "parallelshell": "latest",
-    "serve-favicon": "latest"
-  },
-  "scripts": {
-    "jshint": "jshint assets/js",
-    "styles": "stylus assets/styles/main.styl -r -u kouto-swiss -o public",
-    "js": "browserify -t debowerify assets/js/main.js > public/main.js",
-    "styles:watch": "watch \"npm run styles\" assets/styles/ --wait=0.1",
-    "js:watch": "watch \"npm run js\" assets/js/ --wait=0.1",
-    "start": "parallelshell \"npm run styles:watch\" \"npm run js:watch\" \"node app.js\""
-  }
+	"name": "boilerplate",
+	"dependencies": {
+		"express": "~4.12.4",
+		"stylus": "~0.51.1",
+		"kouto-swiss": "~0.11.12",
+		"browserify": "~10.2.4",
+		"bower": "~1.4.1",
+		"debowerify": "~1.3.1",
+		"jshint": "~2.8.0",
+		"jade": "~1.11.0",
+		"livereload": "~0.3.7",
+		"watch": "~0.16.0",
+		"parallelshell": "~1.1.1",
+		"serve-favicon": "~2.3.0"
+	},
+	"scripts": {
+		"jshint": "jshint assets/js",
+		"styles": "stylus assets/styles/main.styl -r -u kouto-swiss -o public",
+		"js": "browserify -t debowerify assets/js/main.js > public/main.js",
+		"styles:watch": "stylus assets/styles/main.styl -w -r -u kouto-swiss -o public",
+		"js:watch": "watch \"npm run js\" assets/js/ --wait=0.1",
+		"start": "parallelshell \"npm run styles:watch\" \"npm run js:watch\" \"node app.js\""
+	}
 }
