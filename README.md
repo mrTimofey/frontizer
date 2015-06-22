@@ -65,7 +65,7 @@ Use function *static(path)* in your views for static URLs. Path argument must no
 
 ## Views helpers
 
-* range([from], to) - generates an array of numbers from first parameter to second; first parameter can be emitted so it will be equal to 1 by default. Examples:
+* range([from], to) - generates an array of numbers from first parameter to second; first parameter can be omitted so it will be equal to 1 by default. Examples:
   * range(3, 5) -> [3, 4, 5]
   * range(5) -> [1, 2, 3, 4, 5]
 
