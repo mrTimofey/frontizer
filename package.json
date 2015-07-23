@@ -20,6 +20,8 @@
 		"js": "browserify -t debowerify assets/js/main.js > public/main.js",
 		"styles:watch": "stylus assets/styles/main.styl -w -r -u kouto-swiss -o public",
 		"js:watch": "watch \"npm run js\" assets/js/ --wait=0.1",
-		"start": "parallelshell \"npm run styles:watch\" \"npm run js:watch\" \"node app.js\""
+		"watch": "parallelshell \"npm run styles:watch\" \"npm run js:watch\"",
+		"server": "node app.js",
+		"start": "parallelshell \"npm run watch\" \"npm run server\""
 	}
 }
