@@ -68,7 +68,7 @@ function lookupData(path, after) {
 	})();
 }
 
-function range(from, to) {
+app.locals.range = function(from, to) {
 	if (!to){
 		to = from;
 		from = 0;
@@ -80,9 +80,12 @@ function range(from, to) {
 	return a;
 }
 
-function static(path) {
+app.locals.static = function(path) {
 	return '/assets/static/' + path;
 }
+
+app.locals.__css = '/assets/main.css';
+app.locals.__js = '/assets/main.js';
 
 app.get(/^\/(.*)$/, function(req, res) {
 	var reqPath = req.params[0];
@@ -90,11 +93,7 @@ app.get(/^\/(.*)$/, function(req, res) {
 
 	lookupData(reqPath, function(data) {
 		data.__livereload = '//' + req.hostname + ':' + config.livereloadPort + '/livereload.js';
-		data.__css = '/assets/main.css';
-		data.__js = '/assets/main.js';
 		data.req = req;
-		data.static = static;
-		data.range = range;
 		try {
 			res.render(reqPath, data, function(err, output) {
 				if (err) res.status(404).end(err.toString());
