@@ -96,7 +96,7 @@ app.get(/^\/(.*)$/, function(req, res) {
 		data.req = req;
 		try {
 			res.render(reqPath, data, function(err, output) {
-				if (err) res.status(404).end(err.toString());
+				if (err) res.status(500).end(err.toString());
 				else res.end(output);
 			});
 		}
