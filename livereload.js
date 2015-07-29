@@ -13,13 +13,11 @@ try {
 };
 
 if (config.livereloadPort) {
-	livereloadServer = livereload.createServer({
+	livereload.createServer({
 		port: config.livereloadPort,
 		exts: ['css', 'js'],
 		interval: 100
-	});
-
-	livereloadServer.watch(__dirname + '/public');
+	}).watch(__dirname + '/public');
 }
 else {
 	console.log('Livereload disabled');
