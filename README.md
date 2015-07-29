@@ -9,7 +9,7 @@ Modules involved:
 * Templating: [Jade](http://jade-lang.com)
 * Styles: [Stylus](http://learnboost.github.io/stylus/) with [kouto-swiss](http://kouto-swiss.io)
 * Client scripts: [Browserify](http://browserify.org), [Bower](http://bower.io), [Debowerify](https://github.com/eugeneware/debowerify), [Watchify](https://github.com/substack/watchify), [jshint](http://jshint.com)
-* Utility: [Livereload](https://github.com/napcs/node-livereload), [Watch](https://github.com/mikeal/watch), [Parallelshell](https://github.com/keithamus/parallelshell), [Serve-favicon](https://github.com/expressjs/serve-favicon)
+* Utility: [Livereload](https://github.com/napcs/node-livereload), [Parallelshell](https://github.com/keithamus/parallelshell), [Serve-favicon](https://github.com/expressjs/serve-favicon)
 
 ## Installation and configuration
 

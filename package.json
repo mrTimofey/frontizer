@@ -10,7 +10,6 @@
 		"jshint": "~2.8.0",
 		"jade": "~1.11.0",
 		"livereload": "~0.3.7",
-		"watch": "~0.16.0",
 		"parallelshell": "~1.1.1",
 		"serve-favicon": "~2.3.0",
 		"watchify": "~3.3.0"
