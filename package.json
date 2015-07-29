@@ -22,6 +22,7 @@
 		"js:watch": "watch \"npm run js\" assets/js/ --wait=0.1",
 		"watch": "parallelshell \"npm run styles:watch\" \"npm run js:watch\"",
 		"server": "node app.js",
-		"start": "parallelshell \"npm run watch\" \"npm run server\""
+		"livereload": "node livereload.js",
+		"start": "parallelshell \"npm run watch\" \"npm run server\" \"npm run livereload\""
 	}
 }

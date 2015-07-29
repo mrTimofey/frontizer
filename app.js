@@ -1,5 +1,4 @@
 var express = require('express'),
-	livereload = require('livereload'),
 	path = require('path'),
 	fs = require('fs'),
 	favicon = require('serve-favicon'),
@@ -13,14 +12,7 @@ try {
 }
 catch(e) { console.log('Using default config file only'); }
 
-var app = express(),
-	livereloadServer = livereload.createServer({
-		port: config.livereloadPort,
-		exts: ['css', 'js'],
-		interval: 100
-	});
-
-livereloadServer.watch(__dirname + '/public');
+var app = express();
 
 app.set('view engine', 'jade');
 // allows absolute path in extends for jade
