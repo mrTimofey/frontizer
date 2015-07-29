@@ -10,7 +10,8 @@ try {
 	Object.keys(customConfig).forEach(function(k) {
 		config[k] = customConfig[k];
 	});
-};
+}
+catch (e) {}
 
 if (config.livereloadPort) {
 	livereload.createServer({
