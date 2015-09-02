@@ -1,82 +1,81 @@
-# Node.js Boilerplate
+# Node.js frontend platform
 
-Frontend Node.js based boilerpalte.
-
-It can be used for fast frontend project development.
-
-Modules involved:
-* Request handling: [Express](http://expressjs.com)
-* Templating: [Jade](http://jade-lang.com)
-* Styles: [Stylus](http://learnboost.github.io/stylus/) with [kouto-swiss](http://kouto-swiss.io)
-* Client scripts: [Browserify](http://browserify.org), [Bower](http://bower.io), [Debowerify](https://github.com/eugeneware/debowerify), [Watchify](https://github.com/substack/watchify), [jshint](http://jshint.com)
-* Utility: [Livereload](https://github.com/napcs/node-livereload), [Parallelshell](https://github.com/keithamus/parallelshell), [Serve-favicon](https://github.com/expressjs/serve-favicon)
+Node.js based tool for effective frontend development.
 
 ## Installation and configuration
 
-Open console and change current directory to the project than execute
+From project folder:
 
 ```
 npm install
 ```
 
-Create files "assets/js/main.js" and "assets/styles/main.styl".
+Create files *assets/js/main.js* and *assets/styles/main.styl*.
 
-Default configuration is stored in "config.deafult.json".
-You can create "config.json" file and rewrite any option from default configuration.
+Default configuration is stored in *config.deafult.json*.
+You can create *config.json* and rewrite any default option.
 
 Configuration options are:
 * appPort - application port
-* livereloadPort - port for livereload server
+* livereloadPort - livereload server port (false to disable livereload)
 
-## Starting and CLI
+## Running
 
-Open console and change current directory to the project than execute
-
-```
-npm run start
-```
-
-This will run all related tasks and your project will be available at 3000 port by default.
-Port 35729 will be used for livereload server by default.
-
-To run jshint execute
+To start develop you simply have to run:
 
 ```
-npm run jshint
+npm start
 ```
+
+## CLI
+
+* npm run js - browserify and publish JavaScript sources
+* npm run styles - compile and publish stylus sources
+* npm run jshint - check all client JavaScript sources with jshint
+* npm run styles:watch - styles watcher
+* npm run js:watch - client JavaScript watcher
+* npm run server - application server
+* npm run livereload - livereload server
+
+*npm start* command executes watchers and servers in parallel, so you do not need to run them directly.
+
+## Assets
+
+Assets folder contains all statics and source files for your project. Main files are used as a starting points
+for compiling, browserifying and publishing. Published files are placed inside *assets/compiled* directory.
 
 ## Views
 
-All views files must be stored inside "views" directory. Their names will be used in routing.
+Views folder contains your jade templates. Each file here represents it's own route which is the same as file name.
+The one exception is *home.jade* which represents a home page.
 
-Example: "/about/career" request will be handled with "views/about/career.jade" view.
+View based routing examples:
 
-If corresponding view file is not found then you will see error page with 404 status.
+* home.js - /
+* foo/bar.jade - /foo/bar
+* foo/home.jade - /foo
 
-For the front page create "home.jade" view.
+## Data
 
-## Assets and static files
+You can provide any data to your views by creating data files. They will be fetched in the same way as view.
+*export* object fields will be variables in views.
 
-Project assets and statics are stored in "assets" directory with obviously named directories inside.
+Data shared with corresponding view also includes data from upper levels home files.
+For example, route /foo/bar will use *views/foo/bar.jade* view and try to fetch and merge files:
 
-Use *script(src=__js)* and *link(rel="stylesheet" href=__css)* to include compiled scripts and styles within your views.
+1. data/home.js
+2. data/foo.js
+3. data/foo/bar.js
 
-Use function *static(path)* in your views for static URLs. Path argument must not contain leading slash.
+Obviously, *data/home.js* file will be frtched on every route so you can use it to provide global data and defaults.
 
-## Views helpers
+## View helpers
 
 * range([from], to) - generates an array of numbers from first parameter to second; first parameter can be omitted so it will be equal to 1 by default. Examples:
   * range(3, 5) -> [3, 4, 5]
   * range(5) -> [1, 2, 3, 4, 5]
-
-## Views data
-
-You can pass variables to views using files named same as views but inside "data" directory. Available variables are *module.exports* object properties.
-
-Data files from home to each segment in URI will be merged. If some object property has same name with upper level data object then this property will be rewritten. 
-
-Example: "/about/career" request will be handled with data defined in *module.exports* inside files "home.js", "about.js", "about/career.js" in "data" directory.
-If there is a property *title* both in "home.js" and "about.js" then *title* from "about.js" will be availabe in view.
+  
+You can define your own helpers in data files.
 
 ## Livereload
 
@@ -90,3 +89,11 @@ Debowerify allows you to include bower components by using just *require(<compon
 (e.g. *require('jquery')*) 
 
 Use "./some-script.js" to include local script files inside "assets/js" directory.
+
+## NPM modules
+
+* Request handling: [Express](http://expressjs.com)
+* Templating: [Jade](http://jade-lang.com)
+* Styles: [Stylus](http://learnboost.github.io/stylus/) with [kouto-swiss](http://kouto-swiss.io)
+* Client JavaScript: [Browserify](http://browserify.org), [Bower](http://bower.io), [Debowerify](https://github.com/eugeneware/debowerify), [Watchify](https://github.com/substack/watchify), [jshint](http://jshint.com)
+* Utility: [Livereload](https://github.com/napcs/node-livereload), [Parallelshell](https://github.com/keithamus/parallelshell), [Serve-favicon](https://github.com/expressjs/serve-favicon)

@@ -1,4 +1,4 @@
 {
-  "appPort": 3000,
-  "livereloadPort": 35729
+	"appPort": 3000,
+	"livereloadPort": 35729
 }
