@@ -67,7 +67,7 @@ For example, route /foo/bar will use *views/foo/bar.jade* view and try to fetch 
 2. data/foo.js
 3. data/foo/bar.js
 
-Obviously, *data/home.js* file will be frtched on every route so you can use it to provide global data and defaults.
+Obviously, *data/home.js* file will be fetched on every route so you can use it to provide global data and defaults.
 
 ## View helpers
 
