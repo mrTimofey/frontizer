@@ -4,20 +4,14 @@ Node.js based tool for effective frontend development.
 
 ## Installation and configuration
 
-From project folder:
-
 ```
 npm install
+node init [--appPort={application port}] [--livereloadPort={liereload port}]
 ```
 
-Create files *assets/js/main.js* and *assets/styles/main.styl*.
+This will install all needed npm packages, create main style and JavaScript files and initilize config.
 
-Default configuration is stored in *config.deafult.json*.
-You can create *config.json* and rewrite any default option.
-
-Configuration options are:
-* appPort - application port
-* livereloadPort - livereload server port (false to disable livereload)
+Default configuration uses 3000 as appPort and 35729 as livereloadPort
 
 ## Running
 

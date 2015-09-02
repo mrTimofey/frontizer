@@ -1,16 +1,12 @@
+/**
+ * Application server
+ */
+
 var express = require('express'),
 	path = require('path'),
 	fs = require('fs'),
 	favicon = require('serve-favicon'),
-	config = require('./config.default.json');
-
-try {
-	customConfig = require('./config.json');
-	Object.keys(customConfig).forEach(function(k) {
-		config[k] = customConfig[k];
-	});
-}
-catch(e) { console.log('Using default config file only'); }
+	config = require('./config.json');
 
 var app = express();
 
