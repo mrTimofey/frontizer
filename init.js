@@ -42,7 +42,7 @@ console.log('config.json created');
 try {
 	file = fs.openSync('views/layout.jade', 'wx');
 	fs.writeSync(file,
-		"html\n\thead\n\t\tmeta(charset='UTF-8')\n\t\ttitle=title\n\t\tlink(href=__css rel='stylesheet')" +
+		"doctype html\nhtml\n\thead\n\t\tmeta(charset='UTF-8')\n\t\ttitle=title\n\t\tlink(href=__css rel='stylesheet')" +
 		"\n\tbody\n\t\tmain\n\t\t\tblock main\n\t\tscript(src=__js)" +
 			(config.livereloadPort ? "\n\t\tscript(src=__livereload)" : '')
 	);
