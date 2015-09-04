@@ -6,7 +6,7 @@ Node.js based tool for effective frontend development.
 
 ```
 npm install
-node init [--appPort={application port}] [--livereloadPort={liereload port}]
+node init [--appPort={application port}] [--livereloadPort={livereload port}]
 ```
 
 This will install all needed npm packages, create main style and JavaScript files and initilize config.
