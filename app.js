@@ -14,9 +14,7 @@ app.set('view engine', 'jade');
 // allows absolute path in extends for jade
 app.locals.basedir = app.get('views');
 app.use(favicon(__dirname + '/assets/favicon.ico'));
-app.use('/assets', express.static(__dirname + '/assets/compiled'));
-app.use('/assets/fonts', express.static(__dirname + '/assets/fonts'));
-app.use('/assets/static', express.static(__dirname + '/assets/static'));
+app.use('/assets', express.static(__dirname + '/assets'));
 
 /**
  * Lookups all data files and merges them into one object.
@@ -72,8 +70,8 @@ app.locals.static = function(path) {
 	return '/assets/static/' + path;
 }
 
-app.locals.__css = '/assets/main.css';
-app.locals.__js = '/assets/main.js';
+app.locals.__css = '/assets/compiled/main.css';
+app.locals.__js = '/assets/compiled/main.js';
 
 app.get(/^\/(.*)$/, function(req, res) {
 	var reqPath = req.params[0];
