@@ -89,7 +89,7 @@ Use "./some-script.js" to include local script files inside "assets/js" director
 * Request handling: [Express](http://expressjs.com)
 * Templating: [Jade](http://jade-lang.com)
 * Styles: [Stylus](http://learnboost.github.io/stylus/) with [kouto-swiss](http://kouto-swiss.io)
-* Client JavaScript: [Browserify](http://browserify.org), [Bower](http://bower.io), [Debowerify](https://github.com/eugeneware/debowerify), [Watchify](https://github.com/substack/watchify), [jshint](http://jshint.com)
+* Client JavaScript: [Browserify](http://browserify.org), [Watchify](https://github.com/substack/watchify), [jshint](http://jshint.com)
 * Utility:
 	[Livereload](https://github.com/napcs/node-livereload),
 	[Parallelshell](https://github.com/keithamus/parallelshell),
