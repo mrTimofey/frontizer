@@ -2,10 +2,12 @@
 
 Node.js based tool for effective frontend development.
 
+Includes stylus, browserify, es6, jade.
+
 ## Installation and configuration
 
 ```
-npm install
+npm i
 node init [--appPort={application port}] [--livereloadPort={livereload port}]
 ```
 
@@ -24,10 +26,10 @@ npm start
 ## CLI
 
 * **npm start** - runs watchers, livereload and application servers in parallel
-* npm run js - browserify and publish JavaScript sources
-* npm run styles - compile and publish stylus sources
+* npm run js - compile JS/ES6 sources
+* npm run styles - compile Stylus sources
 * npm run styles:watch - styles watcher
-* npm run js:watch - client JavaScript watcher
+* npm run js:watch - scripts watcher
 * npm run server - application server
 * npm run livereload - livereload server
 
@@ -35,6 +37,11 @@ npm start
 
 Assets folder contains all statics and source files for your project. Main files are used as a starting points
 for compiling, browserifying and publishing. Published files are placed inside *assets/compiled* directory.
+
+## Client JavaScript and ECMAScript 6
+
+Either ordinary JavaScript or ECMAScript 6 can be used simultaneously. All files with *.es6* extension will
+be precompiled by Babel. Main script file is *main.es6*. Use it to import all needed deps.
 
 ## Views
 
@@ -66,6 +73,8 @@ Obviously, *data/home.js* file will be fetched on every route so you can use it 
 * range([from], to) - generates an array of numbers from first parameter to second; first parameter can be omitted so it will be equal to 1 by default. Examples:
   * range(3, 5) -> [3, 4, 5]
   * range(5) -> [1, 2, 3, 4, 5]
+* static('file-name') - prepends static assets root to the file name
+  * static('example.jpg') -> '/assets/static/example.jpg'
   
 You can define your own helpers in data files.
 
@@ -78,7 +87,11 @@ To enable livereload feature just include *script(src=__livereload)* in view.
 * Request handling: [Express](http://expressjs.com)
 * Templating: [Jade](http://jade-lang.com)
 * Styles: [Stylus](http://learnboost.github.io/stylus/) with [kouto-swiss](http://kouto-swiss.io)
-* Client JavaScript: [Browserify](http://browserify.org), [Watchify](https://github.com/substack/watchify), [jshint](http://jshint.com)
+* Client JavaScript:
+	[Browserify](http://browserify.org),
+	[Watchify](https://github.com/substack/watchify),
+	[Babelify](https://github.com/babel/babelify) with
+	[ES2015 preset](https://github.com/babel/babel/tree/master/packages/babel-preset-es2015)
 * Utility:
 	[Livereload](https://github.com/napcs/node-livereload),
 	[Parallelshell](https://github.com/keithamus/parallelshell),

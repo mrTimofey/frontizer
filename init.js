@@ -11,7 +11,7 @@ var fs = require('fs'),
 	// files to create on initialization
 	files = [
 		{
-			name: 'assets/js/main.js',
+			name: 'assets/js/main.es6',
 		},
 		{
 			name: 'assets/styles/main.styl',
