@@ -23,15 +23,13 @@ npm start
 
 ## CLI
 
+* **npm start** - runs watchers, livereload and application servers in parallel
 * npm run js - browserify and publish JavaScript sources
 * npm run styles - compile and publish stylus sources
-* npm run jshint - check all client JavaScript sources with jshint
 * npm run styles:watch - styles watcher
 * npm run js:watch - client JavaScript watcher
 * npm run server - application server
 * npm run livereload - livereload server
-
-*npm start* command executes watchers and servers in parallel, so you do not need to run them directly.
 
 ## Assets
 
