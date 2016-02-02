@@ -75,15 +75,6 @@ You can define your own helpers in data files.
 
 To enable livereload feature just include *script(src=__livereload)* in view.
 
-## Bower components
-
-You can use bower to install client-side dependencies.
-To include them in your scripts you can use *require* function provided by browserify.
-Debowerify allows you to include bower components by using just *require(<component name>)* without path
-(e.g. *require('jquery')*) 
-
-Use "./some-script.js" to include local script files inside "assets/js" directory.
-
 ## NPM modules
 
 * Request handling: [Express](http://expressjs.com)
