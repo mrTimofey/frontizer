@@ -13,6 +13,8 @@ locals.linkTo = function(view) {
 	if (view === '/') view = 'home';
 	return view.split('/').join('.') + '.html';
 }
+var oldStatic = locals.static;
+locals.static = function() { return oldStatic.apply(null, arguments).substring(1); }
 locals.__css = 'assets/compiled/main.css';
 locals.__js = 'assets/compiled/main.js';
 

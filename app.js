@@ -25,7 +25,6 @@ app.get(/^\/(.*)$/, function(req, res) {
 	if (reqPath === '') reqPath = 'home';
 
 	helpers.lookupData(reqPath, (data) => {
-		console.log(data);
 		if (config.livereloadPort)
 			data.__livereload = '//' + req.hostname + ':' + config.livereloadPort + '/livereload.js';
 		else data.__livereload = false;
