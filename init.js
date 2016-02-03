@@ -6,7 +6,9 @@ var fs = require('fs'),
 	// default config
 	config = {
 		appPort: 3000,
-		livereloadPort: 35729
+		livereloadPort: 35729,
+		js: ['main.es6'],
+		styles: ['main.styl']
 	},
 	// files to create on initialization
 	files = [
@@ -46,16 +48,39 @@ var fs = require('fs'),
 
 // parse config
 var file = fs.openSync('config.json', 'w');
-process.argv.slice(2).forEach(function (v) {
+process.argv.slice(2).forEach((v) => {
 	v = v.split('=');
-	v[0] = v[0].replace('--', '').trim();
-	if (v.length < 2 || !config[v[0]]) return console.error('unrecognized argument: ', v);
-	config[v[0]] = v[1].trim() * 1;
+	v[0] = v[0].replace('-', '').trim();
+
+	switch (v[0]) {
+		case 'livereloadPort':
+		case 'lr':
+			v[0] = 'livereloadPort';
+			config[v[0]] = v[1].trim() * 1;
+			break;
+		case 'appPort':
+		case 'app':
+			v[0] = 'appPort';
+			config[v[0]] = v[1].trim() * 1;
+			break;
+		case 'styles':
+			v[0] = 'styles';
+			config[v[0]] = v[1].split(' ').map(i => i.trim()).filter(i => i.length);
+			break;
+		case 'js':
+			v[0] = 'js';
+			config[v[0]] = v[1].split(' ').map(i => i.trim()).filter(i => i.length);
+			break;
+		default:
+			console.error('unrecognized argument: ', v);
+			break;
+	}
 });
+
 fs.writeSync(file, JSON.stringify(config));
 console.log('config.json created');
 
-files.forEach(function(file) {
+files.forEach((file) => {
 	var f;
 	try {
 		f = fs.openSync(file.name, 'wx');
