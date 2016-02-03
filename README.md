@@ -33,12 +33,20 @@ npm start
 * npm run server - application server
 * npm run livereload - livereload server
 
+### Static build
+
+You can create a fully static build with html files and assets included with command:
+
+`npm run build`
+
+Static build can be found in *build* directory.
+
 ## Assets
 
 Assets folder contains all statics and source files for your project. Main files are used as a starting points
 for compiling, browserifying and publishing. Published files are placed inside *assets/compiled* directory.
 
-## Client JavaScript and ECMAScript 6
+### Client JavaScript and ECMAScript 6
 
 Either ordinary JavaScript or ECMAScript 6 can be used simultaneously. All files with *.es6* extension will
 be precompiled by Babel. Main script file is *main.es6*. Use it to import all needed deps.
@@ -75,7 +83,10 @@ Obviously, *data/home.js* file will be fetched on every route so you can use it 
   * range(5) -> [1, 2, 3, 4, 5]
 * static('file-name') - prepends static assets root to the file name
   * static('example.jpg') -> '/assets/static/example.jpg'
-  
+* linkTo('view-name') - returns a proper link to the view (there are different for static build and application)
+  * linkTo('home') -> '/', static builds: 'home.html'
+  * linkTo('my/page') -> '/my/page', static builds: 'my.page.html'
+
 You can define your own helpers in data files.
 
 ## Livereload
@@ -96,4 +107,5 @@ To enable livereload feature just include *script(src=__livereload)* in view.
 	[Livereload](https://github.com/napcs/node-livereload),
 	[Parallelshell](https://github.com/keithamus/parallelshell),
 	[Serve-favicon](https://github.com/expressjs/serve-favicon),
-	[jstransformer-stylus](https://github.com/jstransformers/jstransformer-stylus)
+	[jstransformer-stylus](https://github.com/jstransformers/jstransformer-stylus),
+	[ncp](https://github.com/AvianFlu/ncp)
