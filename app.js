@@ -9,6 +9,8 @@ var express = require('express'),
 	locals = require('./lib/locals'),
 	helpers = require('./lib/helpers');
 
+locals.init('app');
+
 // APP SERVER
 
 var app = express();

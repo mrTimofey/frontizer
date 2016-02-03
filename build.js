@@ -9,15 +9,7 @@ var fs = require('fs'),
 	locals = require('./lib/locals'),
 	helpers = require('./lib/helpers');
 
-// alter locals
-locals.linkTo = function(view) {
-	if (view === '/') view = 'home';
-	return view.split('/').join('.') + '.html';
-}
-var oldStatic = locals.static;
-locals.static = function() { return oldStatic.apply(null, arguments).substring(1); }
-locals.__css = locals.__css.replace('/assets/', 'assets/');
-locals.__js = locals.__js.replace('/assets/', 'assets/');
+locals.init('static');
 
 function scan(parents) {
 	parents = parents || [];
