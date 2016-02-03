@@ -9,19 +9,21 @@
 		"jstransformer-stylus": "^1.0.0",
 		"kouto-swiss": "^0.11.12",
 		"livereload": "^0.4.1",
+		"ncp": "^2.0.0",
 		"parallelshell": "^2.0.0",
 		"serve-favicon": "^2.3.0",
 		"stylus": "^0.53.0",
 		"watchify": "^3.7.0"
 	},
 	"scripts": {
-		"styles": "stylus assets/styles/main.styl --sourcemap-inline -r -u kouto-swiss -o assets/compiled",
-		"js": "browserify -d assets/js/main.js -o assets/compiled/main.js",
-		"styles:watch": "stylus assets/styles/main.styl --sourcemap-inline -w -r -u kouto-swiss -o assets/compiled",
+		"styles": "stylus assets/styles/main.styl --sourcemap -r -u kouto-swiss -o assets/compiled",
+		"js": "browserify --extensions=.es6 -t [ babelify --extensions .es6 --presets es2015 ] -d assets/js/main.es6 -o assets/compiled/main.js",
+		"styles:watch": "stylus assets/styles/main.styl --sourcemap -w -r -u kouto-swiss -o assets/compiled",
 		"js:watch": "watchify --extensions=.es6 -t [ babelify --extensions .es6 --presets es2015 ] -d assets/js/main.es6 -o assets/compiled/main.js -v",
 		"watch": "parallelshell \"npm run styles:watch\" \"npm run js:watch\"",
 		"server": "node app.js",
 		"livereload": "node livereload.js",
-		"start": "parallelshell \"npm run styles:watch\" \"npm run js:watch\" \"npm run server\" \"npm run livereload\""
+		"start": "parallelshell \"npm run styles:watch\" \"npm run js:watch\" \"npm run server\" \"npm run livereload\"",
+		"build": "npm run styles && npm run js && node build && ncp assets build/assets"
 	}
 }
