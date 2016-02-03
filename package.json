@@ -1,5 +1,5 @@
 {
-	"name": "boilerplate",
+	"name": "node-frontend-platform",
 	"dependencies": {
 		"babel-preset-es2015": "*",
 		"babelify": "*",
