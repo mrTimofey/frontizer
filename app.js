@@ -7,7 +7,8 @@ var express = require('express'),
 	favicon = require('serve-favicon'),
 	config = require('./config.json'),
 	locals = require('./lib/locals'),
-	helpers = require('./lib/helpers');
+	helpers = require('./lib/helpers'),
+	livereload = require('./lib/livereload');
 
 locals.init('app');
 
@@ -50,3 +51,7 @@ app.get(/^\/(.*)$/, function(req, res) {
 
 app.listen(config.appPort);
 exports.app = app;
+
+// LIVERELOAD SERVER
+
+exports.livereload = livereload(config.livereloadPort, __dirname + '/assets/compiled');
