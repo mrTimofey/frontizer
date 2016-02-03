@@ -29,8 +29,9 @@ var fs = require('fs'),
 					"body\n\t\t" +
 						"main\n\t\t\t" +
 						"block main\n\t\t" +
-						"script(src=__js)" +
-				(config.livereloadPort ? "\n\t\tscript(src=__livereload)" : '');
+						"script(src=__js)\n\t\t" +
+						"if __livereload\n\t\t\t" +
+							"script(src=__livereload)";
 			}
 		},
 		{
