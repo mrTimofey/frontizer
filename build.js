@@ -9,14 +9,15 @@ var fs = require('fs'),
 	locals = require('./lib/locals'),
 	helpers = require('./lib/helpers');
 
+// alter locals
 locals.linkTo = function(view) {
 	if (view === '/') view = 'home';
 	return view.split('/').join('.') + '.html';
 }
 var oldStatic = locals.static;
 locals.static = function() { return oldStatic.apply(null, arguments).substring(1); }
-locals.__css = 'assets/compiled/main.css';
-locals.__js = 'assets/compiled/main.js';
+locals.__css = locals.__css.replace('/assets/', 'assets/');
+locals.__js = locals.__js.replace('/assets/', 'assets/');
 
 function scan(parents) {
 	parents = parents || [];
@@ -52,7 +53,7 @@ function scan(parents) {
 					prototcol: 'http',
 					xhr: false
 				};
-				data.__livereload = false;
+				data.__livereload = '';
 				data.basedir = './views';
 
 				fs.writeFileSync('./build/' + htmlFile, jade.renderFile(viewFullPath, data), { flags: 'w' });

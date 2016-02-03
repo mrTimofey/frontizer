@@ -9,11 +9,16 @@ var express = require('express'),
 	locals = require('./lib/locals'),
 	helpers = require('./lib/helpers');
 
+// APP SERVER
+
 var app = express();
 
 app.set('view engine', 'jade');
+
 // allows absolute path in extends for jade
 app.locals.basedir = app.get('views');
+
+// statics
 app.use(favicon(__dirname + '/assets/favicon.ico'));
 app.use('/assets', express.static(__dirname + '/assets'));
 
@@ -26,7 +31,7 @@ app.get(/^\/(.*)$/, function(req, res) {
 
 	helpers.lookupData(reqPath, (data) => {
 		if (config.livereloadPort)
-			data.__livereload = '//' + req.hostname + ':' + config.livereloadPort + '/livereload.js';
+			data.__livereload = '<script src="//' + req.hostname + ':' + config.livereloadPort + '/livereload.js"></script>';
 		else data.__livereload = false;
 		data.req = req;
 		try {
@@ -42,4 +47,4 @@ app.get(/^\/(.*)$/, function(req, res) {
 });
 
 app.listen(config.appPort);
-module.exports = app;
+exports.app = app;

@@ -2,6 +2,7 @@
  * New project initialize
  */
 
+'use strict'
 var fs = require('fs'),
 	// default config
 	config = {
@@ -13,13 +14,6 @@ var fs = require('fs'),
 	// files to create on initialization
 	files = [
 		{
-			name: 'assets/js/main.es6',
-		},
-		{
-			name: 'assets/styles/main.styl',
-			content: '@import kouto-swiss\n\nnormalize()'
-		},
-		{
 			name: 'views/layout.jade',
 			content: function() {
 				return "doctype html\n" +
@@ -27,13 +21,12 @@ var fs = require('fs'),
 					"head\n\t\t" +
 						"meta(charset='UTF-8')\n\t\t" +
 						"title=title\n\t\t" +
-						"link(href=__css rel='stylesheet')\n\t" +
+						"!=__css\n\t" +
 					"body\n\t\t" +
 						"main\n\t\t\t" +
 						"block main\n\t\t" +
-						"script(src=__js)\n\t\t" +
-						"if __livereload\n\t\t\t" +
-							"script(src=__livereload)";
+						"!=__js\n\t\t" +
+						"!=__livereload";
 			}
 		},
 		{
@@ -48,6 +41,26 @@ var fs = require('fs'),
 
 // parse config
 var file = fs.openSync('config.json', 'w');
+
+function configFileList(k, args, path) {
+	path = path || ('assets/' + k);
+	args = args.split(' ').map(i => i.trim()).filter(i => i.length);
+	let unique = {}, realArgs = [];
+	args.forEach(i => {
+		let withoutExt = i.split('.').slice(0, -1).join('.');
+		if (unique[withoutExt]) {
+			console.error(k + ' args must contain only unique file names excluding extensions');
+			console.warn('   ' + k + ' arg "' + i + '" was ignored');
+			return;
+		}
+		unique[withoutExt] = true;
+
+		files.push({ name: path + '/' + i, content: '' })
+		realArgs.push(i);
+	});
+	config[k] = realArgs;
+}
+
 process.argv.slice(2).forEach((v) => {
 	v = v.split('=');
 	v[0] = v[0].replace('-', '').trim();
@@ -64,12 +77,10 @@ process.argv.slice(2).forEach((v) => {
 			config[v[0]] = v[1].trim() * 1;
 			break;
 		case 'styles':
-			v[0] = 'styles';
-			config[v[0]] = v[1].split(' ').map(i => i.trim()).filter(i => i.length);
+			configFileList('styles', v[1]);
 			break;
 		case 'js':
-			v[0] = 'js';
-			config[v[0]] = v[1].split(' ').map(i => i.trim()).filter(i => i.length);
+			configFileList('js', v[1]);
 			break;
 		default:
 			console.error('unrecognized argument: ', v);
@@ -79,6 +90,7 @@ process.argv.slice(2).forEach((v) => {
 
 fs.writeSync(file, JSON.stringify(config));
 console.log('config.json created');
+console.log(config);
 
 files.forEach((file) => {
 	var f;
