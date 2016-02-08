@@ -62,6 +62,12 @@ View based routing examples:
 * foo/bar.jade - /foo/bar
 * foo/home.jade - /foo
 
+### Including assets
+
+Write *__css* in the *head* inside your layout to add styles.
+
+Write *__js* in the layout wherever you need to add compiled js (recommnded: in the end of the *body*).
+
 ## Data
 
 You can provide any data to your views by creating data files. They will be fetched in the same way as view.
@@ -91,7 +97,7 @@ You can define your own helpers in data files.
 
 ## Livereload
 
-To enable livereload feature just include *script(src=__livereload)* in view.
+Write *__livereload* in your layout view just before in the end of the *body* tag.
 
 ## NPM modules
 
