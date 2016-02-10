@@ -8,7 +8,7 @@ Includes stylus, browserify, es6, jade.
 
 ```
 npm i
-node init [--appPort={application port}] [--livereloadPort={livereload port}]
+node init [-app={application port}] [-lr={livereload port}]
 ```
 
 This will install all needed npm packages, create main style and JavaScript files and initilize config.
