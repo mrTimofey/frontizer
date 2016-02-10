@@ -8,7 +8,8 @@ var express = require('express'),
 	config = require('./config.json'),
 	locals = require('./lib/locals'),
 	helpers = require('./lib/helpers'),
-	livereload = require('./lib/livereload');
+	livereload = require('./lib/livereload'),
+	exec = require('child_process').exec;
 
 locals.init('app');
 
@@ -54,4 +55,26 @@ exports.app = app;
 
 // LIVERELOAD SERVER
 
-exports.livereload = livereload(config.livereloadPort, __dirname + '/assets/compiled');
+if (config.livereloadPort)
+	exports.livereload = livereload(config.livereloadPort, __dirname + '/assets/compiled');
+
+// WATCH SOURCES
+
+config.js.forEach(function(file) {
+	var outFile = file.split('.').slice(0, -1) + '.js',
+		watcher = exec('watchify assets/js/' + file + ' ' +
+			helpers.browserifyArgs.join(' ') +
+			' -o assets/compiled/' + outFile);
+	watcher.stdout.pipe(process.stdout);
+	watcher.stderr.pipe(process.stderr);
+});
+
+config.styles.forEach(function(file) {
+	var outFile = file.split('.').slice(0, -1) + '.css',
+		watcher = exec('stylus assets/styles/' + file + ' ' +
+			helpers.stylusArgs.join(' ') +
+			' -m --sourcemap-root assets' +
+			' -w -o assets/compiled/' + outFile);
+	watcher.stdout.pipe(process.stdout);
+	watcher.stderr.pipe(process.stderr);
+});

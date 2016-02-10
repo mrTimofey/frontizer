@@ -1,5 +1,15 @@
 {
-	"name": "node-frontend-platform",
+	"name": "frontend-platform",
+	"version": "1.0.0",
+	"description": "Effective frontend development tool",
+	"keywords": ["frontend", "platform", "build", "tool", "dev"],
+	"homepage": "https://github.com/mrTimofey/node-frontend-platform",
+	"license": "ISC",
+	"repository": "https://github.com/mrTimofey/node-frontend-platform.git",
+	"author": "Timofey Tiunov <timoxa17@gmail.com>",
+	"engines": {
+		"node": ">=5.0.0"
+	},
 	"dependencies": {
 		"babel-preset-es2015": "*",
 		"babelify": "*",
@@ -10,18 +20,12 @@
 		"kouto-swiss": "^0.11.12",
 		"livereload": "^0.4.1",
 		"ncp": "^2.0.0",
-		"parallelshell": "^2.0.0",
 		"serve-favicon": "^2.3.0",
 		"stylus": "^0.53.0",
 		"watchify": "^3.7.0"
 	},
 	"scripts": {
-		"styles": "stylus assets/styles/main.styl --sourcemap -r -u kouto-swiss -o assets/compiled",
-		"js": "browserify --extensions=.es6 -t [ babelify --extensions .es6 --presets es2015 ] -d assets/js/main.es6 -o assets/compiled/main.js",
-		"styles:watch": "stylus assets/styles/main.styl --sourcemap -w -r -u kouto-swiss -o assets/compiled",
-		"js:watch": "watchify --extensions=.es6 -t [ babelify --extensions .es6 --presets es2015 ] -d assets/js/main.es6 -o assets/compiled/main.js -v",
-		"watch": "parallelshell \"npm run styles:watch\" \"npm run js:watch\"",
-		"start": "parallelshell \"npm run styles:watch\" \"npm run js:watch\" \"node app\"",
-		"build": "npm run styles && npm run js && node build && ncp assets build/assets"
+		"start": "node app",
+		"build": "node build"
 	}
 }

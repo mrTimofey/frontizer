@@ -8,30 +8,23 @@ Includes stylus, browserify, es6, jade.
 
 ```
 npm i
-node init [-app={application port}] [-lr={livereload port}]
+node init
+	[--app={application port}] default: 3000
+	[--lr={livereload port}] default: 35729
+	[--styles="{stylus source filenames, separated with spaces}"] default: main.styl
+	[--js="{js/es6 source filenames, separated with spaces}"] default: main.es6
 ```
 
-This will install all needed npm packages, create main style and JavaScript files and initilize config.
+Each file in *styles* and *js* arguments will be compiled with same filenames and extensions *.css* or *.js*.
 
-Default configuration uses 3000 as appPort and 35729 as livereloadPort
+You can use this command in further to change configuration.
+Also you can modify *config.json* file for this purpose.
 
 ## Running
-
-To start develop you simply have to run:
 
 ```
 npm start
 ```
-
-## CLI
-
-* **npm start** - runs watchers, livereload and application servers in parallel
-* npm run js - compile JS/ES6 sources
-* npm run styles - compile Stylus sources
-* npm run styles:watch - styles watcher
-* npm run js:watch - scripts watcher
-* npm run server - application server
-* npm run livereload - livereload server
 
 ### Static build
 
@@ -62,27 +55,13 @@ View based routing examples:
 * foo/bar.jade - /foo/bar
 * foo/home.jade - /foo
 
-### Including assets
+### Predefined variables
 
-Write *__css* in the *head* inside your layout to add styles.
+* *__css* contains ready to use <link> tags with compiled css links
+* *__js* same for JavaScript
+* *__livereload* contains link to a JavaScript file necessary for livereloading
 
-Write *__js* in the layout wherever you need to add compiled js (recommnded: in the end of the *body*).
-
-## Data
-
-You can provide any data to your views by creating data files. They will be fetched in the same way as view.
-*export* object fields will be variables in views.
-
-Data shared with corresponding view also includes data from upper levels home files.
-For example, route /foo/bar will use *views/foo/bar.jade* view and try to fetch and merge files:
-
-1. data/home.js
-2. data/foo.js
-3. data/foo/bar.js
-
-Obviously, *data/home.js* file will be fetched on every route so you can use it to provide global data and defaults.
-
-## View helpers
+### Helper functions
 
 * range([from], to) - generates an array of numbers from first parameter to second; first parameter can be omitted so it will be equal to 1 by default. Examples:
   * range(3, 5) -> [3, 4, 5]
@@ -93,11 +72,21 @@ Obviously, *data/home.js* file will be fetched on every route so you can use it 
   * linkTo('home') -> '/', static builds: 'home.html'
   * linkTo('my/page') -> '/my/page', static builds: 'my.page.html'
 
-You can define your own helpers in data files.
+## Data
 
-## Livereload
+You can provide any data to your views by creating data files. They will be fetched in the same way as view.
+*export* object fields will be variables in views.
 
-Write *__livereload* in your layout view just before in the end of the *body* tag.
+Data shared with corresponding view also includes data from upper levels home files.
+For example, route /foo/bar will uses *views/foo/bar.jade* view and tries to fetch and merge files:
+
+1. data/home.js
+2. data/foo.js
+3. data/foo/bar.js
+
+Obviously, *data/home.js* file will be fetched on every route so you can use it to provide global data and defaults.
+
+Any duplicated variable names will be overwritten by lower level data.
 
 ## NPM modules
 
@@ -111,7 +100,6 @@ Write *__livereload* in your layout view just before in the end of the *body* ta
 	[ES2015 preset](https://github.com/babel/babel/tree/master/packages/babel-preset-es2015)
 * Utility:
 	[Livereload](https://github.com/napcs/node-livereload),
-	[Parallelshell](https://github.com/keithamus/parallelshell),
 	[Serve-favicon](https://github.com/expressjs/serve-favicon),
 	[jstransformer-stylus](https://github.com/jstransformers/jstransformer-stylus),
 	[ncp](https://github.com/AvianFlu/ncp)

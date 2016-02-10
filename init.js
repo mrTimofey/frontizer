@@ -63,7 +63,7 @@ function configFileList(k, args, path) {
 
 process.argv.slice(2).forEach((v) => {
 	v = v.split('=');
-	v[0] = v[0].replace('-', '').trim();
+	v[0] = v[0].split('-').join('').trim();
 
 	switch (v[0]) {
 		case 'livereloadPort':

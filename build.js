@@ -7,7 +7,10 @@ var fs = require('fs'),
 	path = require('path'),
 	jade = require('jade'),
 	locals = require('./lib/locals'),
-	helpers = require('./lib/helpers');
+	helpers = require('./lib/helpers'),
+	config = require('./config.json'),
+	exec = require('child_process').exec,
+	ncp = require('ncp').ncp;
 
 locals.init('static');
 
@@ -57,3 +60,39 @@ function scan(parents) {
 }
 
 scan();
+
+[
+	'build/assets',
+	'build/assets/compiled',
+	'build/assets/static',
+	'build/assets/fonts'
+].forEach(function(folder) {
+	try {
+		fs.mkdirSync(folder);
+	}
+	catch (e) {
+		if (e.code !== 'EEXIST') throw e;
+	}
+});
+
+
+config.js.forEach(function(file) {
+	var outFile = file.split('.').slice(0, -1) + '.js',
+		builder = exec('browserify assets/js/' + file + ' ' +
+			helpers.browserifyArgs.join(' ') +
+			' -o build/assets/compiled/' + outFile);
+	builder.stdout.pipe(process.stdout);
+	builder.stderr.pipe(process.stderr);
+});
+
+config.styles.forEach(function(file) {
+	var outFile = file.split('.').slice(0, -1) + '.css',
+		builder = exec('stylus assets/styles/' + file + ' ' +
+			helpers.stylusArgs.join(' ') +
+			' -o build/assets/compiled/' + outFile);
+	builder.stdout.pipe(process.stdout);
+	builder.stderr.pipe(process.stderr);
+});
+
+ncp('assets/static', 'build/assets/static');
+ncp('assets/fonts', 'build/assets/fonts');
