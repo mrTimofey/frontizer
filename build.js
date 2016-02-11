@@ -14,6 +14,8 @@ var fs = require('fs'),
 
 locals.init('static');
 
+// SCAN AND BUILD VIEWS
+
 function scan(parents) {
 	parents = parents || [];
 
@@ -61,6 +63,8 @@ function scan(parents) {
 
 scan();
 
+// CREATE FOLDERS
+
 [
 	'build/assets',
 	'build/assets/compiled',
@@ -75,24 +79,27 @@ scan();
 	}
 });
 
+// BUILD SOURCES
 
-config.js.forEach(function(file) {
-	var outFile = file.split('.').slice(0, -1) + '.js',
-		builder = exec('browserify assets/js/' + file + ' ' +
-			helpers.browserifyArgs.join(' ') +
-			' -o build/assets/compiled/' + outFile);
-	builder.stdout.pipe(process.stdout);
-	builder.stderr.pipe(process.stderr);
+[{
+	files: config.js,
+	command: 'browserify assets/js/{input} ' + helpers.browserifyArgs.join(' ') + ' -o build/assets/compiled/{output}.js'
+}, {
+	files: config.styles,
+	command: 'stylus assets/styles/{input} ' + helpers.stylusArgs.join(' ') + ' -o build/assets/compiled/{output}.css'
+}].forEach(build => {
+	var command = build.command;
+	build.files.forEach(file => {
+		var builder = exec(command
+			.replace('{input}', file)
+			.replace('{output}', file.split('.').slice(0, -1)));
+
+		builder.stdout.pipe(process.stdout);
+		builder.stderr.pipe(process.stderr);
+	});
 });
 
-config.styles.forEach(function(file) {
-	var outFile = file.split('.').slice(0, -1) + '.css',
-		builder = exec('stylus assets/styles/' + file + ' ' +
-			helpers.stylusArgs.join(' ') +
-			' -o build/assets/compiled/' + outFile);
-	builder.stdout.pipe(process.stdout);
-	builder.stderr.pipe(process.stderr);
-});
+// COPY STATIC ASSETS
 
 ncp('assets/static', 'build/assets/static');
 ncp('assets/fonts', 'build/assets/fonts');

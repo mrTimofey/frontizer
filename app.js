@@ -29,7 +29,7 @@ app.use('/assets', express.static(__dirname + '/assets'));
 // populate helpers
 Object.keys(locals).forEach(k => app.locals[k] = locals[k]);
 
-app.get(/^\/(.*)$/, function(req, res) {
+app.get(/^\/(.*)$/, (req, res) => {
 	var reqPath = req.params[0];
 	if (reqPath === '') reqPath = 'home';
 
@@ -51,30 +51,28 @@ app.get(/^\/(.*)$/, function(req, res) {
 });
 
 app.listen(config.appPort);
-exports.app = app;
 
 // LIVERELOAD SERVER
 
-if (config.livereloadPort)
-	exports.livereload = livereload(config.livereloadPort, __dirname + '/assets/compiled');
+if (config.livereloadPort) livereload(config.livereloadPort, __dirname + '/assets/compiled');
 
 // WATCH SOURCES
 
-config.js.forEach(function(file) {
-	var outFile = file.split('.').slice(0, -1) + '.js',
-		watcher = exec('watchify assets/js/' + file + ' ' +
-			helpers.browserifyArgs.join(' ') +
-			' -o assets/compiled/' + outFile);
-	watcher.stdout.pipe(process.stdout);
-	watcher.stderr.pipe(process.stderr);
-});
+[{
+	files: config.js,
+	command: 'watchify assets/js/{input} ' + helpers.browserifyArgs.join(' ') + ' -o assets/compiled/{output}.js'
+}, {
+	files: config.styles,
+	command: 'stylus assets/styles/{input} ' + helpers.stylusArgs.join(' ') +
+		' -m --sourcemap-root assets -w -o assets/compiled/{output}.css'
+}].forEach(watch => {
+	var command = watch.command;
+	watch.files.forEach(file => {
+		var watcher = exec(command
+			.replace('{input}', file)
+			.replace('{output}', file.split('.').slice(0, -1)));
 
-config.styles.forEach(function(file) {
-	var outFile = file.split('.').slice(0, -1) + '.css',
-		watcher = exec('stylus assets/styles/' + file + ' ' +
-			helpers.stylusArgs.join(' ') +
-			' -m --sourcemap-root assets' +
-			' -w -o assets/compiled/' + outFile);
-	watcher.stdout.pipe(process.stdout);
-	watcher.stderr.pipe(process.stderr);
+		watcher.stdout.pipe(process.stdout);
+		watcher.stderr.pipe(process.stderr);
+	});
 });
