@@ -58,7 +58,7 @@ function configFileList(k, args, path) {
 		files.push({ name: path + '/' + i, content: '' })
 		realArgs.push(i);
 	});
-	config[k] = realArgs;
+	if (realArgs.length) config[k] = realArgs;
 }
 
 process.argv.slice(2).forEach((v) => {
