@@ -26,6 +26,7 @@
 	},
 	"scripts": {
 		"start": "node app",
-		"build": "node build"
+		"build": "node build",
+		"build:pretty": "node build --pretty"
 	}
 }

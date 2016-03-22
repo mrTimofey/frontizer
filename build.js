@@ -10,9 +10,25 @@ var fs = require('fs'),
 	helpers = require('./lib/helpers'),
 	config = require('./config.json'),
 	exec = require('child_process').exec,
-	ncp = require('ncp').ncp;
+	ncp = require('ncp').ncp,
+	pretty = false;
 
 locals.init('static');
+
+console.log(process.argv);
+process.argv.slice(2).forEach(v => {
+	v = v.split('=');
+	v[0] = v[0].split('-').join('').trim();
+
+	switch (v[0]) {
+		case 'pretty':
+			pretty = true;
+			break;
+		default:
+			console.error('unrecognized argument: ', v);
+			break;
+	}
+});
 
 // SCAN AND BUILD VIEWS
 
@@ -52,6 +68,7 @@ function scan(parents) {
 				};
 				data.__livereload = '';
 				data.basedir = './views';
+				data.pretty = pretty ? '\t' : false;
 
 				fs.writeFileSync('./build/' + htmlFile, jade.renderFile(viewFullPath, data), { flags: 'w' });
 
