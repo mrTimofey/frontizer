@@ -30,7 +30,7 @@ npm start
 
 You can create a fully static build with html files and assets included with command:
 
-`npm run build`
+`npm run build` or `npm run build:pretty` to output html with tab indentations.
 
 Static build can be found in *build* directory.
 
