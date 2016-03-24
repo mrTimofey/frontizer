@@ -1,4 +1,4 @@
-data
-build
-assets
-views
+/data
+/build
+/assets
+/views
