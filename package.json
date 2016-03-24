@@ -1,5 +1,5 @@
 {
-	"name": "frontend-platform",
+	"name": "frontizer",
 	"version": "1.0.0",
 	"description": "Effective frontend development tool",
 	"keywords": ["frontend", "platform", "build", "tool", "dev"],
