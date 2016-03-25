@@ -12,15 +12,15 @@ var fs = require('fs'),
 	exec = require('child_process').exec;
 
 module.exports = function(options, home) {
-	locals.init('app');
-
 	options = options || {};
 	home = home || process.cwd();
 
-	// APP SERVER
-
 	var app = express(),
 		config = require(home + '/config.json');
+
+	locals.init('app', home, config);
+
+	// APP SERVER
 
 	app.set('views', home + '/views');
 	app.set('view engine', 'jade');
@@ -71,10 +71,10 @@ module.exports = function(options, home) {
 
 	[{
 		files: config.js,
-		command: 'watchify assets/js/{input} ' + helpers.browserifyArgs.join(' ') + ' -o assets/compiled/{output}.js'
+		command: __dirname + '/../node_modules/.bin/watchify assets/js/{input} ' + helpers.browserifyArgs.join(' ') + ' -o assets/compiled/{output}.js'
 	}, {
 		files: config.styles,
-		command: 'stylus assets/styles/{input} ' + helpers.stylusArgs.join(' ') +
+		command: __dirname + '/../node_modules/.bin/stylus assets/styles/{input} ' + helpers.stylusArgs.join(' ') +
 		' -m --sourcemap-root assets -w -o assets/compiled/{output}.css'
 	}].forEach(watch => {
 		var command = watch.command;
