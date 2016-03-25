@@ -1,6 +1,6 @@
 {
 	"name": "frontizer",
-	"version": "1.0.0",
+	"version": "2.0.0",
 	"description": "Effective frontend development tool",
 	"keywords": ["frontend", "platform", "build", "tool", "dev"],
 	"homepage": "https://github.com/mrTimofey/node-frontend-platform",
@@ -25,7 +25,10 @@
 		"watchify": "^3.7.0"
 	},
 	"scripts": {
-		"start": "node app",
+		"start": "node bin/frontizer start",
 		"build": "node build"
+	},
+	"bin": {
+		"frontizer": "./bin/frontizer"
 	}
 }
