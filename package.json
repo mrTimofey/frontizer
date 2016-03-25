@@ -1,6 +1,6 @@
 {
 	"name": "frontizer",
-	"version": "2.0.0",
+	"version": "2.0.1",
 	"description": "Effective frontend development tool",
 	"keywords": ["frontend", "platform", "build", "tool", "dev"],
 	"homepage": "https://github.com/mrTimofey/node-frontend-platform",
@@ -15,18 +15,17 @@
 		"babelify": "*",
 		"browserify": "^13.0.0",
 		"express": "^4.12.4",
-		"jade": "^1.11.0",
-		"jstransformer-stylus": "^1.0.0",
-		"kouto-swiss": "^0.11.12",
+		"jade": "*",
+		"jstransformer-stylus": "*",
+		"kouto-swiss": "*",
 		"livereload": "^0.4.1",
 		"ncp": "^2.0.0",
 		"serve-favicon": "^2.3.0",
-		"stylus": "^0.53.0",
+		"stylus": "*",
 		"watchify": "^3.7.0"
 	},
 	"scripts": {
-		"start": "node bin/frontizer start",
-		"build": "node build"
+		"start": "node bin/frontizer start"
 	},
 	"bin": {
 		"frontizer": "./bin/frontizer"
