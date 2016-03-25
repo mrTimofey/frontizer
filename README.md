@@ -1,38 +1,22 @@
-# In progress!!!
+# Frontizer
 
 Node.js based tool for effective frontend development.
 
-Includes stylus, browserify, es6, jade.
+Includes stylus, browserify, es6, jade for now. Fututre builds will allow you to choose your own build stack.
 
-## Installation and configuration
+## Usage
 
-```
-npm i
-node init
-	[--app={application port}] default: 3000
-	[--lr={livereload port}] default: 35729
-	[--styles="{stylus source filenames, separated with spaces}"] default: main.styl
-	[--js="{js/es6 source filenames, separated with spaces}"] default: main.es6
-```
-
-Each file in *styles* and *js* arguments will be compiled with same filenames and extensions *.css* or *.js*.
-
-You can use this command in further to change configuration.
-Also you can modify *config.json* file for this purpose.
-
-## Running
+First install this module:
 
 ```
-npm start
+npm i -g frontizer
 ```
 
-### Static build
+Create a folder for your new project and enter it.
 
-You can create a fully static build with html files and assets included with command:
+Initialize your new project with `frontizer init` than run it with `frontizer start`.
 
-`npm run build`
-
-Static build can be found in *build* directory.
+Just type `frontizer` to see all available commands and their arguments.
 
 ## Assets
 
@@ -41,12 +25,12 @@ for compiling, browserifying and publishing. Published files are placed inside *
 
 ### Client JavaScript and ECMAScript 6
 
-Either ordinary JavaScript or ECMAScript 6 can be used simultaneously. All files with *.es6* extension will
-be precompiled by Babel. Main script file is *main.es6*. Use it to import all needed deps.
+Either ordinary JavaScript or ECMAScript 6 can be used simultaneously.
+All files with *.es6* extension will be precompiled by Babel.
 
 ## Views
 
-Views folder contains your jade templates. Each file here represents it's own route which is the same as file name.
+Views folder contains your templates. Each file here represents it's own route which is the same as a file name.
 The one exception is *home.jade* which represents a home page.
 
 View based routing examples:
@@ -75,7 +59,7 @@ View based routing examples:
 ## Data
 
 You can provide any data to your views by creating data files. They will be fetched in the same way as view.
-*export* object fields will be variables in views.
+*exports* object fields will be variables in views.
 
 Data shared with corresponding view also includes data from upper levels home files.
 For example, route /foo/bar will uses *views/foo/bar.jade* view and tries to fetch and merge files:
@@ -86,7 +70,7 @@ For example, route /foo/bar will uses *views/foo/bar.jade* view and tries to fet
 
 Obviously, *data/home.js* file will be fetched on every route so you can use it to provide global data and defaults.
 
-Any duplicated variable names will be overwritten by lower level data.
+Any duplicated data field names will be overwritten by lower level data.
 
 ## NPM modules
 
