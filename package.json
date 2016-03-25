@@ -24,9 +24,6 @@
 		"stylus": "*",
 		"watchify": "^3.7.0"
 	},
-	"scripts": {
-		"start": "node bin/frontizer start"
-	},
 	"bin": {
 		"frontizer": "./bin/frontizer"
 	}
