@@ -1,3 +1,3 @@
-exports.init = require('./actions/init');
-exports.start = require('./actions/start');
-//exports.build = require('./actions/build');
+exports.init = require('./commands/init');
+exports.start = require('./commands/start');
+exports.build = require('./commands/build');

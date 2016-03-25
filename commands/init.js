@@ -4,13 +4,6 @@
 
 'use strict'
 var fs = require('fs'),
-	// default config
-	config = {
-		appPort: 3000,
-		livereloadPort: 35729,
-		js: ['main.es6'],
-		styles: ['main.styl']
-	},
 	// folders to create on initialization
 	folders = [
 		'views',
@@ -50,6 +43,14 @@ var fs = require('fs'),
 	];
 
 module.exports = function(options, home) {
+	// default config
+	let config = {
+		appPort: 3000,
+		livereloadPort: 35729,
+		js: ['main.es6'],
+		styles: ['main.styl']
+	}
+
 	home = home || process.cwd();
 	if (options) Object.keys(config).forEach(k => { config[k] = options[k] || config[k] });
 
@@ -102,4 +103,4 @@ module.exports = function(options, home) {
 			else throw e;
 		}
 	});
-}
+};
