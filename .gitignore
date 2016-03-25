@@ -3,3 +3,7 @@
 /npm-debug.log
 /bower_components
 /config.json
+/assets
+/build
+/data
+/views
