@@ -1,0 +1,73 @@
+#!/usr/bin/env node
+
+'use strict'
+
+var usage = `
+Commands:
+
+frontizer [help]
+
+    Outputs this help text
+
+frontizer init [options]
+
+    Creates a new project with needed file structure and source files
+
+    --app, --appPort <port>          application server port number (default: 3000)
+
+    --lr,  --livereloadPort <port>   livereload server port (default: 35729, disabled: 0)
+
+    --styles <files>                 Stylus and JavaScript files to be compiled separated
+    --js <files>                     with whitespaces
+                                         - use quotes to list multiple files
+                                         - each file will be compiled to css/js file with
+                                           the same name and included in your application
+                                     defaults:
+                                         --js main.es6
+                                         --styles main.styl
+
+frontizer start [options]
+
+    Runs your project
+
+frontizer build [--pretty]
+
+    Creates a fully static build of your project.
+
+    --pretty     create html files with indentation characters
+`;
+
+var args = process.argv.slice(2),
+	action = args.shift() || 'help',
+	index = require('../index'),
+	options = {};
+
+if (action === 'help') console.info(usage);
+else if (!index[action]) console.error('Unknown action ' + action);
+else {
+	while (args.length) {
+		let arg = args.shift().split('-').join('');
+
+		if (action === 'init') switch (arg) {
+			case 'app':
+			case 'appPort':
+				options.appPort = args.shift();
+				break;
+			case 'livereloadPort':
+			case 'lr':
+				options.livereloadPort = args.shift();
+				break;
+			case 'styles':
+				options.styles = args.shift().split(' ');
+				break;
+			case 'js':
+				options.js = args.shift().split(' ');
+				break;
+		}
+		else if (action === 'build') {
+			if (arg === 'pretty') options.pretty = true;
+		}
+	}
+
+	index[action](options);
+}
