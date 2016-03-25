@@ -51,17 +51,15 @@ else {
 		if (action === 'init') switch (arg) {
 			case 'app':
 			case 'appPort':
-				options.appPort = args.shift();
+				options.appPort = parseInt(args.shift());
 				break;
 			case 'livereloadPort':
 			case 'lr':
-				options.livereloadPort = args.shift();
+				options.livereloadPort = parseInt(args.shift());
 				break;
 			case 'styles':
-				options.styles = args.shift().split(' ');
-				break;
 			case 'js':
-				options.js = args.shift().split(' ');
+				options[arg] = args.shift().split(' ').filter(s => s.length);
 				break;
 		}
 		else if (action === 'build') {

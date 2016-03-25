@@ -11,12 +11,23 @@ var fs = require('fs'),
 		js: ['main.es6'],
 		styles: ['main.styl']
 	},
+	// folders to create on initialization
+	folders = [
+		'views',
+		'data',
+		'assets',
+		'assets/compiled',
+		'assets/fonts',
+		'assets/js',
+		'assets/static',
+		'assets/styles',
+	],
 	// files to create on initialization
 	files = [
 		{
 			name: 'views/layout.jade',
-			content: function() {
-				return "doctype html\n" +
+			content:
+				"doctype html\n" +
 				"html\n\t" +
 					"head\n\t\t" +
 						"meta(charset='UTF-8')\n\t\t" +
@@ -26,8 +37,7 @@ var fs = require('fs'),
 						"main\n\t\t\t" +
 						"block main\n\t\t" +
 						"!=__js\n\t\t" +
-						"!=__livereload";
-			}
+						"!=__livereload"
 		},
 		{
 			name: 'views/home.jade',
@@ -39,68 +49,57 @@ var fs = require('fs'),
 		}
 	];
 
-// parse config
-var file = fs.openSync('config.json', 'w');
+module.exports = function(options, home) {
+	home = home || process.cwd();
+	if (options) Object.keys(config).forEach(k => { config[k] = options[k] || config[k] });
 
-function configFileList(k, args, path) {
-	path = path || ('assets/' + k);
-	args = args.split(' ').map(i => i.trim()).filter(i => i.length);
-	let unique = {}, realArgs = [];
-	args.forEach(i => {
-		let withoutExt = i.split('.').slice(0, -1).join('.');
-		if (unique[withoutExt]) {
-			console.error(k + ' args must contain only unique file names excluding extensions');
-			console.warn('   ' + k + ' arg "' + i + '" was ignored');
-			return;
-		}
-		unique[withoutExt] = true;
+	['styles', 'js'].forEach(k => {
+		let path =  ('assets/' + k),
+			createdFiles = [],
+			unique = {};
 
-		files.push({ name: path + '/' + i, content: '' })
-		realArgs.push(i);
+		config[k].forEach(i => {
+			let withoutExt = i.split('.').slice(0, -1).join('.');
+			if (unique[withoutExt]) {
+				console.warn('   ' + k + ' arg "' + i + '" was ignored because it is not unique');
+				return;
+			}
+			unique[withoutExt] = true;
+
+			files.push({ name: path + '/' + i, content: '' });
+			createdFiles.push(i);
+		});
+		config[k] = createdFiles;
 	});
-	config[k] = realArgs;
+
+	fs.writeSync(fs.openSync(home + '/config.json', 'w'), JSON.stringify(config));
+	console.log('config.json created');
+
+	// CREATE FOLDERS
+
+	folders.forEach(folder => {
+		try {
+			fs.mkdirSync(home + '/' + folder);
+			console.log(folder + ' created');
+		}
+		catch (e) {
+			if (e.code === 'EEXIST') console.log(folder + ' already exists');
+			else throw e;
+		}
+	});
+
+	// CREATE FILES
+
+	files.forEach(file => {
+		let f;
+		try {
+			f = fs.openSync(home + '/' + file.name, 'wx');
+			if (file.content) fs.writeSync(f, file.content);
+			console.log(file.name + ' created');
+		}
+		catch(e) {
+			if (e.code === 'EEXIST') console.log(file.name + ' already exists');
+			else throw e;
+		}
+	});
 }
-
-process.argv.slice(2).forEach((v) => {
-	v = v.split('=');
-	v[0] = v[0].split('-').join('').trim();
-
-	switch (v[0]) {
-		case 'livereloadPort':
-		case 'lr':
-			v[0] = 'livereloadPort';
-			config[v[0]] = v[1].trim() * 1;
-			break;
-		case 'appPort':
-		case 'app':
-			v[0] = 'appPort';
-			config[v[0]] = v[1].trim() * 1;
-			break;
-		case 'styles':
-			configFileList('styles', v[1]);
-			break;
-		case 'js':
-			configFileList('js', v[1]);
-			break;
-		default:
-			console.error('unrecognized argument: ', v);
-			break;
-	}
-});
-
-fs.writeSync(file, JSON.stringify(config));
-console.log('config.json created');
-console.log(config);
-
-files.forEach((file) => {
-	var f;
-	try {
-		f = fs.openSync(file.name, 'wx');
-		if (file.content) fs.writeSync(f, typeof file.content === 'function' ? file.content() : file.content);
-		console.log(file.name + ' created');
-	}
-	catch(e) {
-		if (e.code === 'EEXIST') console.log(file.name + ' already exists');
-		else throw e;
-	}
-});
