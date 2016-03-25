@@ -28,7 +28,7 @@ module.exports = function(options, home) {
 
 	// statics
 	let faviconFile = fs.existsSync(home + '/favicon.ico') ?
-		(home + '/favicon.ico') : (__dirname + '/favicon.ico');
+		(home + '/favicon.ico') : (__dirname + '/../favicon.ico');
 
 	app.use(favicon(faviconFile));
 	app.use('/assets', express.static(home + '/assets'));
