@@ -1,6 +1,6 @@
 {
 	"name": "frontizer",
-	"version": "2.0.1",
+	"version": "0.0.1",
 	"description": "Effective frontend development tool",
 	"keywords": ["frontend", "platform", "build", "tool", "dev"],
 	"homepage": "https://github.com/mrTimofey/node-frontend-platform",
