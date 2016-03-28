@@ -1,6 +1,5 @@
 #!/usr/bin/env node
-
-'use strict'
+'use strict';
 
 var usage = `
 Commands:
@@ -43,29 +42,31 @@ var args = process.argv.slice(2),
 	options = {};
 
 if (action === 'help') console.info(usage);
-else if (!index[action]) console.error('Unknown action ' + action);
-else {
-	while (args.length) {
-		let arg = args.shift().split('-').join('');
+else
+	if (!index[action]) console.error('Unknown action ' + action);
+	else {
+		while (args.length) {
+			let arg = args.shift().split('-').join('');
 
-		if (action === 'init') switch (arg) {
-			case 'app':
-			case 'appPort':
-				options.appPort = parseInt(args.shift());
-				break;
-			case 'livereloadPort':
-			case 'lr':
-				options.livereloadPort = parseInt(args.shift());
-				break;
-			case 'styles':
-			case 'js':
-				options[arg] = args.shift().split(' ').filter(s => s.length);
-				break;
+			if (action === 'init') switch (arg) {
+				case 'app':
+				case 'appPort':
+					options.appPort = parseInt(args.shift());
+					break;
+				case 'livereloadPort':
+				case 'lr':
+					options.livereloadPort = parseInt(args.shift());
+					break;
+				case 'styles':
+				case 'js':
+					options[arg] = args.shift().split(' ').filter(s => s.length);
+					break;
+			}
+			else
+				if (action === 'build') {
+					if (arg === 'pretty') options.pretty = true;
+				}
 		}
-		else if (action === 'build') {
-			if (arg === 'pretty') options.pretty = true;
-		}
+
+		index[action](options);
 	}
-
-	index[action](options);
-}
