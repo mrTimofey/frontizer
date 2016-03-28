@@ -3,7 +3,7 @@
 	"version": "0.0.4",
 	"description": "Effective frontend development tool",
 	"keywords": ["frontend", "build", "tool", "dev", "stylus", "es6"],
-	"homepage": "https://github.com/mrTimofey/node-frontend-platform",
+	"homepage": "https://github.com/mrTimofey/frontizer",
 	"license": "ISC",
 	"repository": "https://github.com/mrTimofey/frontizer.git",
 	"author": "Timofey Tiunov <timoxa17@gmail.com>",
