@@ -7,11 +7,7 @@ Future builds will allow you to use your own modules.
 
 ## Usage
 
-1. Install the module globally:
-
-```
-npm i -g frontizer
-```
+1. Install the module globally: `npm i -g frontizer`
 
 2. Create a folder for your new project and enter it.
 
