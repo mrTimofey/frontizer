@@ -1,37 +1,52 @@
-# Frontizer
+# Node.js frontend platform
 
 Node.js based tool for effective frontend development.
 
-Includes stylus, browserify, es6, jade for now.
-Future builds will allow you to use your own modules.
+Includes stylus, browserify, es6, jade.
 
-## Usage
-
-1. Install the module globally:
+## Installation and configuration
 
 ```
-npm i -g frontizer
+npm i
+node init
+	[--app={application port}] default: 3000
+	[--lr={livereload port}] default: 35729
+	[--styles="{stylus source filenames, separated with spaces}"] default: main.styl
+	[--js="{js/es6 source filenames, separated with spaces}"] default: main.es6
 ```
 
-2. Create a folder for your new project and enter it.
+Each file in *styles* and *js* arguments will be compiled with same filenames and extensions *.css* or *.js*.
 
-3. Initialize your new project with `frontizer init` than run it with `frontizer start`.
+You can use this command in further to change configuration.
+Also you can modify *config.json* file for this purpose.
 
-**Type `frontizer` to see help.**
+## Running
+
+```
+npm start
+```
+
+### Static build
+
+You can create a fully static build with html files and assets included with command:
+
+`npm run build` or `npm run build:pretty` to output html with tab indentations.
+
+Static build can be found in *build* directory.
 
 ## Assets
 
-Assets folder contains all statics and source files for your project.
-Published asset files are placed inside *assets/compiled* directory.
+Assets folder contains all statics and source files for your project. Main files are used as a starting points
+for compiling, browserifying and publishing. Published files are placed inside *assets/compiled* directory.
 
 ### Client JavaScript and ECMAScript 6
 
-Either ordinary JavaScript or ECMAScript 6 can be used simultaneously.
-All files with *.es6* extension will be precompiled by Babel.
+Either ordinary JavaScript or ECMAScript 6 can be used simultaneously. All files with *.es6* extension will
+be precompiled by Babel. Main script file is *main.es6*. Use it to import all needed deps.
 
 ## Views
 
-Views folder contains your templates. Each file here represents it's own route which is the same as a file name.
+Views folder contains your jade templates. Each file here represents it's own route which is the same as file name.
 The one exception is *home.jade* which represents a home page.
 
 View based routing examples:
@@ -60,7 +75,7 @@ View based routing examples:
 ## Data
 
 You can provide any data to your views by creating data files. They will be fetched in the same way as view.
-*exports* object fields will be variables in views.
+*export* object fields will be variables in views.
 
 Data shared with corresponding view also includes data from upper levels home files.
 For example, route /foo/bar will uses *views/foo/bar.jade* view and tries to fetch and merge files:
@@ -71,7 +86,7 @@ For example, route /foo/bar will uses *views/foo/bar.jade* view and tries to fet
 
 Obviously, *data/home.js* file will be fetched on every route so you can use it to provide global data and defaults.
 
-Any duplicated data field names will be overwritten by lower level data.
+Any duplicated variable names will be overwritten by lower level data.
 
 ## NPM modules
 
