@@ -2,26 +2,27 @@
 
 Node.js based tool for effective frontend development.
 
-Includes stylus, browserify, es6, jade for now. Fututre builds will allow you to choose your own build stack.
+Includes stylus, browserify, es6, jade for now.
+Future builds will allow you to use your own modules.
 
 ## Usage
 
-First install this module:
+1. Install the module globally:
 
 ```
 npm i -g frontizer
 ```
 
-Create a folder for your new project and enter it.
+2. Create a folder for your new project and enter it.
 
-Initialize your new project with `frontizer init` than run it with `frontizer start`.
+3. Initialize your new project with `frontizer init` than run it with `frontizer start`.
 
-Just type `frontizer` to see all available commands and their arguments.
+**Type `frontizer` to see help.**
 
 ## Assets
 
-Assets folder contains all statics and source files for your project. Main files are used as a starting points
-for compiling, browserifying and publishing. Published files are placed inside *assets/compiled* directory.
+Assets folder contains all statics and source files for your project.
+Published asset files are placed inside *assets/compiled* directory.
 
 ### Client JavaScript and ECMAScript 6
 

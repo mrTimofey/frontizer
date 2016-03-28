@@ -1,8 +1,8 @@
 {
 	"name": "frontizer",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"description": "Effective frontend development tool",
-	"keywords": ["frontend", "platform", "build", "tool", "dev"],
+	"keywords": ["frontend", "build", "tool", "dev", "stylus", "es6"],
 	"homepage": "https://github.com/mrTimofey/node-frontend-platform",
 	"license": "ISC",
 	"repository": "https://github.com/mrTimofey/node-frontend-platform.git",
