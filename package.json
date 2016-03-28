@@ -1,6 +1,6 @@
 {
 	"name": "frontizer",
-	"version": "0.0.5",
+	"version": "0.0.6",
 	"description": "Effective frontend development tool",
 	"keywords": ["frontend", "build", "tool", "dev", "stylus", "es6"],
 	"homepage": "https://github.com/mrTimofey/frontizer",
