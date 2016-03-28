@@ -5,7 +5,7 @@
 	"keywords": ["frontend", "build", "tool", "dev", "stylus", "es6"],
 	"homepage": "https://github.com/mrTimofey/node-frontend-platform",
 	"license": "ISC",
-	"repository": "https://github.com/mrTimofey/node-frontend-platform.git",
+	"repository": "https://github.com/mrTimofey/frontizer.git",
 	"author": "Timofey Tiunov <timoxa17@gmail.com>",
 	"engines": {
 		"node": ">=5.2.0",
