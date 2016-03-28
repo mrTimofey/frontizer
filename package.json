@@ -25,6 +25,7 @@
 		"stylus": "*",
 		"watchify": "^3.7.0"
 	},
+	"preferGlobal": true,
 	"bin": {
 		"frontizer": "./bin/frontizer"
 	}
