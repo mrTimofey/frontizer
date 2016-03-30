@@ -39,6 +39,9 @@ module.exports = function(options, home) {
 	// allows absolute path in 'extends' for jade
 	app.locals.basedir = app.get('views');
 
+	// indented html output
+	if (options.pretty) app.locals.pretty = '\t';
+
 	app.get(/^\/(.*)$/, (req, res) => {
 		var reqPath = req.params[0];
 		if (reqPath === '') reqPath = 'home';

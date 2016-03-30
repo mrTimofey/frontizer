@@ -29,6 +29,8 @@ frontizer start [options]
 
     Runs your project
 
+    --pretty     create html files with indentation characters
+
 frontizer build [--pretty]
 
     Creates a fully static build of your project.
@@ -63,7 +65,7 @@ else
 					break;
 			}
 			else
-				if (action === 'build') {
+				if (action === 'build' || action === 'start') {
 					if (arg === 'pretty') options.pretty = true;
 				}
 		}
