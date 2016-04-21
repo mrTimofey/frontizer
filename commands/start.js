@@ -16,7 +16,9 @@ module.exports = function(options, home) {
 	home = home || process.cwd();
 
 	var app = express(),
-		config = require(home + '/config.json');
+		config = require(home + '/config.json'),
+		browserifyArgs = config.browserify || [],
+		stylusArgs = config.stylus || [];
 
 	locals.init('app', home, config);
 
@@ -74,11 +76,16 @@ module.exports = function(options, home) {
 
 	[{
 		files: config.js,
-		command: __dirname + '/../node_modules/.bin/watchify assets/js/{input} ' + helpers.browserifyArgs.join(' ') + ' -o assets/compiled/{output}.js'
+		command: __dirname + '/../node_modules/.bin/watchify assets/js/{input} ' +
+			helpers.browserifyArgs.join(' ') +
+			browserifyArgs.join(' ') +
+			' -o assets/compiled/{output}.js'
 	}, {
 		files: config.styles,
-		command: __dirname + '/../node_modules/.bin/stylus assets/styles/{input} ' + helpers.stylusArgs.join(' ') +
-		' -m --sourcemap-root assets -w -o assets/compiled/{output}.css'
+		command: __dirname + '/../node_modules/.bin/stylus assets/styles/{input} ' +
+			helpers.stylusArgs.join(' ') +
+			stylusArgs.join(' ') +
+			' -m --sourcemap-root assets -w -o assets/compiled/{output}.css'
 	}].forEach(watch => {
 		var command = watch.command;
 		watch.files.forEach(file => {
