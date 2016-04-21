@@ -44,6 +44,24 @@ module.exports = function(options, home) {
 	// indented html output
 	if (options.pretty) app.locals.pretty = '\t';
 
+	// serve api
+	app.use(/^\/api\/(.*)$/, (req, res) => {
+		var src = home + '/api/' + req.params[0];
+		fs.exists(src + '.js', exists => {
+			if (!exists) return res.status(404).end('API not found: ' + src);
+			try {
+				let api = require(src);
+				delete require.cache[require.resolve(src)];
+				if (typeof api === 'function') return api(req, res);
+				else return res.json(api);
+			}
+			catch (e) {
+				res.status(500).end(e.toString());
+			}
+		});
+	});
+	
+	// serve views
 	app.get(/^\/(.*)$/, (req, res) => {
 		var reqPath = req.params[0];
 		if (reqPath === '') reqPath = 'home';
