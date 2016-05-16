@@ -12,7 +12,7 @@ frontizer init [options]
 
     Creates a new project with needed file structure and source files
 
-    --app, --appPort <port>          application server port number (default: 3000)
+    --app, --appPort <port>          application server port number (default: 3000, disabled: 0)
 
     --lr,  --livereloadPort <port>   livereload server port (default: 35729, disabled: 0)
 
@@ -24,6 +24,10 @@ frontizer init [options]
                                      defaults:
                                          --js main.es6
                                          --styles main.styl
+
+	--sp, --sourcePath <path>        path to source files (default: assets)
+
+	--dp, --destPath <path>          cimpiled assets path (default: assets/compiled)
 
 frontizer start [options]
 
@@ -62,6 +66,14 @@ else
 				case 'styles':
 				case 'js':
 					options[arg] = args.shift().split(' ').filter(s => s.length);
+					break;
+				case 'sp':
+				case 'sourcePath':
+					options.sourcePath = args.shift().trim();
+					break;
+				case 'dp':
+				case 'destPath':
+					options.destPath = args.shift().trim();
 					break;
 			}
 			else
