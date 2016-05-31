@@ -5,42 +5,9 @@
 'use strict'
 var fs = require('fs'),
 	// folders to create on initialization
-	folders = [
-		'views',
-		'data',
-		'assets',
-		'assets/compiled',
-		'assets/fonts',
-		'assets/js',
-		'assets/static',
-		'assets/styles',
-	],
+	folders = [],
 	// files to create on initialization
-	files = [
-		{
-			name: 'views/layout.jade',
-			content:
-				"doctype html\n" +
-				"html\n\t" +
-					"head\n\t\t" +
-						"meta(charset='UTF-8')\n\t\t" +
-						"title=title\n\t\t" +
-						"!=__css\n\t" +
-					"body\n\t\t" +
-						"main\n\t\t\t" +
-						"block main\n\t\t" +
-						"!=__js\n\t\t" +
-						"!=__livereload"
-		},
-		{
-			name: 'views/home.jade',
-			content: 'extends layout\nblock main\n\th1 Home page'
-		},
-		{
-			name: 'data/home.js',
-			content: "exports.title = 'Hello, world!'"
-		}
-	];
+	files = [];
 
 module.exports = function(options, home) {
 	// default config
@@ -48,14 +15,19 @@ module.exports = function(options, home) {
 		appPort: 3000,
 		livereloadPort: 35729,
 		js: ['main.es6'],
-		styles: ['main.styl']
+		styles: ['main.styl'],
+		viewsPath: 'views',
+		sourcePath: 'assets',
+		destPath: 'assets/compiled',
+		dataPath: 'data'
 	}
 
 	home = home || process.cwd();
 	if (options) Object.keys(config).forEach(k => { config[k] = options[k] || config[k] });
 
+	// sources
 	['styles', 'js'].forEach(k => {
-		let path =  ('assets/' + k),
+		let path =  config.sourcePath + '/' + k,
 			createdFiles = [],
 			unique = {};
 
@@ -73,10 +45,30 @@ module.exports = function(options, home) {
 		config[k] = createdFiles;
 	});
 
-	fs.writeSync(fs.openSync(home + '/config.json', 'w'), JSON.stringify(config));
-	console.log('config.json created');
+	// config fields containing folders to create
+	var configFolders = ['sourcePath', 'destPath'];
+
+	// express app settings
+	if (config.appPort) {
+		configFolders.push('viewsPath');
+		configFolders.push('dataPath');
+		folders.push('data');
+	}
 
 	// CREATE FOLDERS
+	
+	configFolders.forEach(k => {
+		config[k] = config[k].replace(/^\/|\/$/g, '');
+		let cur = '';
+		for (let f of config[k].split('/')) {
+			cur += f;
+			if (folders.indexOf(cur) === -1) folders.push(cur);
+			cur += '/';
+		}
+	});
+
+	folders.push(config.sourcePath + '/styles');
+	folders.push(config.sourcePath + '/js');
 
 	folders.forEach(folder => {
 		try {
@@ -91,6 +83,33 @@ module.exports = function(options, home) {
 
 	// CREATE FILES
 
+	if (config.appPort) {
+		files.push({
+			name: config.viewsPath + '/layout.jade',
+			content:
+			"doctype html\n" +
+			"html\n\t" +
+				"head\n\t\t" +
+					"meta(charset=\"UTF-8\")\n\t\t" +
+					"title=title\n\t\t" +
+					"meta(name=\"viewport\" content=\"width=device-width,initial-scale=1,user-scalable=no,maximum-scale=1\")\n\t\t" +
+					"!=__css\n\t" +
+				"body\n\t\t" +
+					"main\n\t\t\t" +
+						"block main\n\t\t" +
+					"!=__js\n\t\t" +
+					"!=__livereload"
+		});
+		files.push({
+			name: config.viewsPath + '/home.jade',
+			content: 'extends layout\nblock main\n\th1 Home page'
+		});
+		files.push({
+			name: config.dataPath + '/home.js',
+			content: "exports.title = 'Hello, world!'"
+		});
+	}
+
 	files.forEach(file => {
 		let f;
 		try {
@@ -103,4 +122,7 @@ module.exports = function(options, home) {
 			else throw e;
 		}
 	});
+
+	fs.writeSync(fs.openSync(home + '/config.json', 'w'), JSON.stringify(config));
+	console.log('config.json created');
 };

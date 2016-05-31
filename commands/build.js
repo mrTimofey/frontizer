@@ -5,7 +5,7 @@
 'use strict'
 var fs = require('fs'),
 	path = require('path'),
-	jade = require('jade'),
+	jade = require('pug'),
 	locals = require('../lib/locals'),
 	helpers = require('../lib/helpers'),
 	exec = require('child_process').exec,

@@ -25,8 +25,8 @@ module.exports = function(options, home) {
 	if (config.appPort) {
 		var app = express();
 
-		app.set('views', home + '/views');
-		app.set('view engine', 'jade');
+		app.set('views', home + '/' + config.viewsPath);
+		app.set('view engine', 'pug');
 		app.set('view cache', false);
 
 		// statics

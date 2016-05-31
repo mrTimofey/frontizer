@@ -30,6 +30,8 @@ frontizer init [options]
 	--dp, --destPath <path>          compiled assets path (default: assets/compiled)
 	
 	--vp, --viewsPath <path>         views path (default: views)
+	
+	--dataPath <path>                data files path (default: data)
 
 frontizer start [options]
 
@@ -76,6 +78,13 @@ else
 				case 'dp':
 				case 'destPath':
 					options.destPath = args.shift().trim();
+					break;
+				case 'vp':
+				case 'viewsPath':
+					options.viewsPath = args.shift().trim();
+					break;
+				case 'dataPath':
+					options.dataPath = args.shift().trim();
 					break;
 			}
 			else
