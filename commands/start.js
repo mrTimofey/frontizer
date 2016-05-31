@@ -12,7 +12,7 @@ var fs = require('fs'),
 	exec = require('child_process').exec;
 
 module.exports = function(options, home) {
-	options = options || {};
+	options = options || { pretty: false };
 	home = home || process.cwd();
 
 	var config = require(home + '/config.json'),

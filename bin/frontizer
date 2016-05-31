@@ -27,7 +27,9 @@ frontizer init [options]
 
 	--sp, --sourcePath <path>        path to source files (default: assets)
 
-	--dp, --destPath <path>          cimpiled assets path (default: assets/compiled)
+	--dp, --destPath <path>          compiled assets path (default: assets/compiled)
+	
+	--vp, --viewsPath <path>         views path (default: views)
 
 frontizer start [options]
 
