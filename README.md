@@ -5,6 +5,9 @@ Node.js based tool for effective frontend development.
 Includes stylus, browserify, es6, jade for now.
 Future builds will allow you to use your own modules.
 
+*All projet directories are configurable and you can disable express app as well in case you need only
+compilation and watchers (just do not forget to add livereload link manually if you need it).*
+
 ## Usage
 
 1. Install the module globally: `npm i -g frontizer`
@@ -18,7 +21,7 @@ Future builds will allow you to use your own modules.
 ## Assets
 
 Assets folder contains all statics and source files for your project.
-Published asset files are placed inside *assets/compiled* directory.
+Compiled assets are placed inside *assets/compiled* directory by default.
 
 ### Client JavaScript and ECMAScript 6
 
@@ -59,20 +62,20 @@ You can provide any data to your views by creating data files. They will be fetc
 *exports* object fields will be variables in views.
 
 Data shared with corresponding view also includes data from upper levels home files.
-For example, route /foo/bar will uses *views/foo/bar.jade* view and tries to fetch and merge files:
+For example, route /foo/bar will uses *foo/bar* view and tries to fetch and merge files:
 
-1. data/home.js
-2. data/foo.js
-3. data/foo/bar.js
+1. home.js
+2. foo.js
+3. foo/bar.js
 
-Obviously, *data/home.js* file will be fetched on every route so you can use it to provide global data and defaults.
+Obviously, *home.js* file will be fetched on every route so you can use it to provide global data and defaults.
 
 Any duplicated data field names will be overwritten by lower level data.
 
 ## NPM modules
 
 * Request handling: [Express](http://expressjs.com)
-* Templating: [Jade](http://jade-lang.com)
+* Templating: [Pug](http://jade-lang.com)
 * Styles: [Stylus](http://learnboost.github.io/stylus/) with [kouto-swiss](http://kouto-swiss.io)
 * Client JavaScript:
 	[Browserify](http://browserify.org),
