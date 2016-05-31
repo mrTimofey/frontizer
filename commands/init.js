@@ -69,6 +69,8 @@ module.exports = function(options, home) {
 
 	folders.push(config.sourcePath + '/styles');
 	folders.push(config.sourcePath + '/js');
+	folders.push(config.sourcePath + '/fonts');
+	folders.push(config.sourcePath + '/static');
 
 	folders.forEach(folder => {
 		try {
@@ -85,7 +87,7 @@ module.exports = function(options, home) {
 
 	if (config.appPort) {
 		files.push({
-			name: config.viewsPath + '/layout.jade',
+			name: config.viewsPath + '/layout.pug',
 			content:
 			"doctype html\n" +
 			"html\n\t" +
@@ -101,7 +103,7 @@ module.exports = function(options, home) {
 					"!=__livereload"
 		});
 		files.push({
-			name: config.viewsPath + '/home.jade',
+			name: config.viewsPath + '/home.pug',
 			content: 'extends layout\nblock main\n\th1 Home page'
 		});
 		files.push({

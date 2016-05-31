@@ -5,7 +5,7 @@
 'use strict'
 var fs = require('fs'),
 	path = require('path'),
-	jade = require('pug'),
+	pug = require('pug'),
 	locals = require('../lib/locals'),
 	helpers = require('../lib/helpers'),
 	exec = require('child_process').exec,
@@ -27,7 +27,7 @@ module.exports = function(_options, home) {
 	[
 		'build',
 		'build/assets',
-		'build/assets/compiled',
+		'build/compiled',
 		'build/assets/static',
 		'build/assets/fonts'
 	].forEach(folder => {
@@ -44,11 +44,11 @@ module.exports = function(_options, home) {
 	(function scan(parents) {
 		parents = parents || [];
 
-		var folder = home + '/views' + (parents.length ? ('/' + parents.join('/')) : '');
+		var folder = home + '/' + config.viewsPath + (parents.length ? ('/' + parents.join('/')) : '');
 
 		for (let file of fs.readdirSync(folder)) {
 			let viewFullPath = folder + '/' + file,
-				htmlFile = parents.concat([file.replace('.jade', '.html')]).join('.');
+				htmlFile = parents.concat([file.replace('.pug', '.html')]).join('.');
 
 			// recursively scan subfolders
 			if (fs.lstatSync(viewFullPath).isDirectory()) {
@@ -57,10 +57,10 @@ module.exports = function(_options, home) {
 			}
 
 			// ignore wrong extensions
-			if (path.extname(file) !== '.jade') continue;
+			if (path.extname(file) !== '.pug') continue;
 
 			(function(route, htmlFile, viewFullPath) {
-				helpers.lookupData(route, data => {
+				helpers.lookupData(route, config.dataPath, data => {
 					Object.keys(locals).forEach(k => data[k] = locals[k]);
 
 					// emulate express.req
@@ -77,14 +77,14 @@ module.exports = function(_options, home) {
 						query: {}
 					};
 					data.__livereload = '';
-					data.basedir = home + '/views';
+					data.basedir = home + '/' + config.viewsPath;
 					data.pretty = options.pretty ? '\t' : false;
 
-					fs.writeFileSync(home + '/build/' + htmlFile, jade.renderFile(viewFullPath, data), { flags: 'w' });
+					fs.writeFileSync(home + '/build/' + htmlFile, pug.renderFile(viewFullPath, data), { flags: 'w' });
 
 					console.log('build/' + htmlFile + ' created');
 				});
-			})(parents.join('/') + '/' + file.replace('.jade', ''), htmlFile, viewFullPath);
+			})(parents.join('/') + '/' + file.replace('.pug', ''), htmlFile, viewFullPath);
 		}
 	})();
 
@@ -92,10 +92,12 @@ module.exports = function(_options, home) {
 
 	[{
 		files: config.js,
-		command: __dirname + '/../node_modules/.bin/browserify assets/js/{input} ' + helpers.browserifyArgs.join(' ') + ' -o build/assets/compiled/{output}.js'
+		command: __dirname + '/../node_modules/.bin/browserify ' + config.sourcePath + '/js/{input} ' +
+			helpers.browserifyArgs.join(' ') + ' -o build/compiled/{output}.js'
 	}, {
 		files: config.styles,
-		command: __dirname + '/../node_modules/.bin/stylus assets/styles/{input} ' + helpers.stylusArgs.join(' ') + ' -o build/assets/compiled/{output}.css'
+		command: __dirname + '/../node_modules/.bin/stylus ' + config.sourcePath + '/styles/{input} ' +
+			helpers.stylusArgs.join(' ') + ' -o build/compiled/{output}.css'
 	}].forEach(build => {
 		var command = build.command;
 		build.files.forEach(file => {
@@ -110,6 +112,6 @@ module.exports = function(_options, home) {
 
 	// COPY STATIC FILES
 
-	ncp(home + '/assets/static', home + '/build/assets/static');
-	ncp(home + '/assets/fonts', home + '/build/assets/fonts');
+	ncp(home + '/' + config.sourcePath + '/static', home + '/build/assets/static');
+	ncp(home + '/' + config.sourcePath + '/fonts', home + '/build/assets/fonts');
 };

@@ -34,7 +34,8 @@ module.exports = function(options, home) {
 			(home + '/favicon.ico') : (__dirname + '/../favicon.ico');
 
 		app.use(favicon(faviconFile));
-		app.use('/assets', express.static(home + '/assets'));
+		app.use('/assets', express.static(home + '/' + config.sourcePath));
+		app.use('/compiled', express.static(home + '/' + config.destPath));
 
 		// populate helpers
 		Object.keys(locals).forEach(k => app.locals[k] = locals[k]);
@@ -67,7 +68,7 @@ module.exports = function(options, home) {
 			var reqPath = req.params[0];
 			if (reqPath === '') reqPath = 'home';
 
-			helpers.lookupData(reqPath, (data) => {
+			helpers.lookupData(reqPath, config.dataPath, data => {
 				if (config.livereloadPort)
 					data.__livereload ='<script src="//' +
 						req.hostname + ':' + config.livereloadPort + '/livereload.js"></script>';
@@ -90,22 +91,22 @@ module.exports = function(options, home) {
 
 	// LIVERELOAD SERVER
 
-	if (config.livereloadPort) livereload(config.livereloadPort, home + '/assets/compiled');
+	if (config.livereloadPort) livereload(config.livereloadPort, home + '/' + config.destPath);
 
 	// WATCH SOURCES
 
 	[{
 		files: config.js,
-		command: __dirname + '/../node_modules/.bin/watchify assets/js/{input} ' +
+		command: __dirname + '/../node_modules/.bin/watchify ' + config.sourcePath + '/js/{input} ' +
 			helpers.browserifyArgs.join(' ') +
 			browserifyArgs.join(' ') +
-			' -o assets/compiled/{output}.js'
+			' -d -o ' + config.destPath + '/{output}.js'
 	}, {
 		files: config.styles,
-		command: __dirname + '/../node_modules/.bin/stylus assets/styles/{input} ' +
+		command: __dirname + '/../node_modules/.bin/stylus ' + config.sourcePath + '/styles/{input} ' +
 			helpers.stylusArgs.join(' ') +
 			stylusArgs.join(' ') +
-			' -m --sourcemap-root assets -w -o assets/compiled/{output}.css'
+			' -m --sourcemap-root ' + config.sourcePath + ' -w -o ' + config.destPath + '/{output}.css'
 	}].forEach(watch => {
 		var command = watch.command;
 		watch.files.forEach(file => {

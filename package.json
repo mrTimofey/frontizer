@@ -1,6 +1,6 @@
 {
 	"name": "frontizer",
-	"version": "0.1.1",
+	"version": "1.0.0-beta1",
 	"description": "Effective frontend development tool",
 	"keywords": ["frontend", "build", "tool", "dev", "stylus", "es6"],
 	"homepage": "https://github.com/mrTimofey/frontizer",
@@ -16,7 +16,7 @@
 		"babelify": "*",
 		"browserify": "^13.0.0",
 		"express": "^4.12.4",
-		"pug": "*",
+		"pug": "2.0.0-alpha8",
 		"jstransformer-stylus": "*",
 		"kouto-swiss": "*",
 		"livereload": "^0.4.1",
