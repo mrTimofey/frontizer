@@ -12,7 +12,7 @@
 		"npm": ">=3.5.3"
 	},
 	"dependencies": {
-		"babel-preset-es2015": "*",
+		"babel-preset-latest": "*",
 		"babelify": "*",
 		"browserify": "^13.1.0",
 		"express": "^4.14.0",
