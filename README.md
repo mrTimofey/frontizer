@@ -23,10 +23,9 @@ compilation and watchers (just do not forget to add livereload link manually if 
 Assets folder contains all statics and source files for your project.
 Compiled assets are placed inside *assets/compiled* directory by default.
 
-### Client JavaScript and ECMAScript 6
+### Client JavaScript
 
-Either ordinary JavaScript or ECMAScript 6 can be used simultaneously.
-All files with *.es6* extension will be precompiled by Babel.
+All client JavaScript is precompiled by Babel with babel-preset-latest.
 
 ## Views
 
@@ -81,7 +80,7 @@ Any duplicated data field names will be overwritten by lower level data.
 	[Browserify](http://browserify.org),
 	[Watchify](https://github.com/substack/watchify),
 	[Babelify](https://github.com/babel/babelify) with
-	[ES2015 preset](https://github.com/babel/babel/tree/master/packages/babel-preset-es2015)
+	[Latest Babel preset](https://github.com/babel/babel/tree/master/packages/babel-preset-latest)
 * Utility:
 	[Livereload](https://github.com/napcs/node-livereload),
 	[Serve-favicon](https://github.com/expressjs/serve-favicon),
