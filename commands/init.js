@@ -14,13 +14,13 @@ module.exports = function(options, home) {
 	let config = {
 		appPort: 3000,
 		livereloadPort: 35729,
-		js: ['main.es6'],
+		js: ['main.js'],
 		styles: ['main.styl'],
 		viewsPath: 'views',
 		sourcePath: 'assets',
 		destPath: 'assets/compiled',
 		dataPath: 'data'
-	}
+	};
 
 	home = home || process.cwd();
 	if (options) Object.keys(config).forEach(k => { config[k] = options[k] || config[k] });
@@ -103,11 +103,11 @@ module.exports = function(options, home) {
 					"!=__livereload"
 		});
 		files.push({
-			name: config.viewsPath + '/home.pug',
+			name: config.viewsPath + '/index.pug',
 			content: 'extends layout\nblock main\n\th1 Home page'
 		});
 		files.push({
-			name: config.dataPath + '/home.js',
+			name: config.dataPath + '/index.js',
 			content: "exports.title = 'Hello, world!'"
 		});
 	}

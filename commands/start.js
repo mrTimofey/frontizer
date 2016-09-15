@@ -66,7 +66,7 @@ module.exports = function(options, home) {
 		// serve views
 		app.get(/^\/(.*)$/, (req, res) => {
 			var reqPath = req.params[0];
-			if (reqPath === '') reqPath = 'home';
+			if (reqPath === '') reqPath = 'index';
 
 			helpers.lookupData(reqPath, config.dataPath, data => {
 				if (config.livereloadPort)

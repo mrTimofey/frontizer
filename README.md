@@ -31,13 +31,13 @@ All files with *.es6* extension will be precompiled by Babel.
 ## Views
 
 Views folder contains your templates. Each file here represents it's own route which is the same as a file name.
-The one exception is *home.jade* which represents a home page.
+The one exception is *index.pug* which represents a home page.
 
 View based routing examples:
 
-* home.js - /
-* foo/bar.jade - /foo/bar
-* foo/home.jade - /foo
+* index.js - /
+* foo/bar.pug - /foo/bar
+* foo/home.pug - /foo
 
 ### Predefined variables
 
@@ -53,7 +53,7 @@ View based routing examples:
 * static('file-name') - prepends static assets root to the file name
   * static('example.jpg') -> '/assets/static/example.jpg'
 * linkTo('view-name') - returns a proper link to the view (there are different for static build and application)
-  * linkTo('home') -> '/', static builds: 'home.html'
+  * linkTo('index') -> '/', static builds: 'index.html'
   * linkTo('my/page') -> '/my/page', static builds: 'my.page.html'
 
 ## Data
@@ -61,14 +61,14 @@ View based routing examples:
 You can provide any data to your views by creating data files. They will be fetched in the same way as view.
 *exports* object fields will be variables in views.
 
-Data shared with corresponding view also includes data from upper levels home files.
+Data shared with corresponding view also includes data from upper levels index files.
 For example, route /foo/bar will uses *foo/bar* view and tries to fetch and merge files:
 
-1. home.js
+1. index.js
 2. foo.js
 3. foo/bar.js
 
-Obviously, *home.js* file will be fetched on every route so you can use it to provide global data and defaults.
+Obviously, *index.js* file will be fetched on every route so you can use it to provide global data and defaults.
 
 Any duplicated data field names will be overwritten by lower level data.
 
