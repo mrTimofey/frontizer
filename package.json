@@ -1,32 +1,44 @@
 {
-	"name": "frontizer",
-	"version": "1.0.0-beta4",
-	"description": "Effective frontend development tool",
-	"keywords": ["frontend", "build", "tool", "dev", "stylus", "es6"],
-	"homepage": "https://github.com/mrTimofey/frontizer",
-	"license": "ISC",
-	"repository": "https://github.com/mrTimofey/frontizer.git",
-	"author": "Timofey Tiunov <timoxa17@gmail.com>",
-	"engines": {
-		"node": ">=5.2.0",
-		"npm": ">=3.5.3"
-	},
-	"dependencies": {
-		"babel-preset-latest": "*",
-		"babelify": "*",
-		"browserify": "^13.1.0",
-		"express": "^4.14.0",
-		"pug": "2.0.0-beta6",
-		"jstransformer-stylus": "*",
-		"kouto-swiss": "*",
-		"livereload": "^0.5.0",
-		"ncp": "^2.0.0",
-		"serve-favicon": "^2.3.0",
-		"stylus": "*",
-		"watchify": "^3.7.0"
-	},
-	"preferGlobal": true,
-	"bin": {
-		"frontizer": "./bin/frontizer"
-	}
+  "name": "frontizer",
+  "version": "1.0.0-beta5",
+  "description": "Effective frontend development tool",
+  "keywords": [
+    "frontend",
+    "build",
+    "tool",
+    "dev",
+    "stylus",
+    "es6",
+    "vue",
+    "babel"
+  ],
+  "homepage": "https://github.com/mrTimofey/frontizer",
+  "license": "ISC",
+  "repository": "https://github.com/mrTimofey/frontizer.git",
+  "author": "Timofey Tiunov <timoxa17@gmail.com>",
+  "engines": {
+    "node": ">=5.2.0",
+    "npm": ">=3.5.3"
+  },
+  "dependencies": {
+    "babel-plugin-transform-runtime": "^6.15.0",
+    "babel-preset-latest": "*",
+    "babelify": "*",
+    "browserify": "^13.1.0",
+    "express": "^4.14.0",
+    "jstransformer-stylus": "*",
+    "kouto-swiss": "*",
+    "livereload": "^0.5.0",
+    "ncp": "^2.0.0",
+    "pug": "2.0.0-beta6",
+    "serve-favicon": "^2.3.0",
+    "stylus": "*",
+    "vue": "^1.0.28",
+    "vueify": "*",
+    "watchify": "^3.7.0"
+  },
+  "preferGlobal": true,
+  "bin": {
+    "frontizer": "./bin/frontizer"
+  }
 }
