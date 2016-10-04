@@ -1,6 +1,6 @@
 {
   "name": "frontizer",
-  "version": "1.0.0-beta5",
+  "version": "1.0.0",
   "description": "Effective frontend development tool",
   "keywords": [
     "frontend",
@@ -21,6 +21,7 @@
     "npm": ">=3.5.3"
   },
   "dependencies": {
+    "aliasify": "^2.0.0",
     "babel-plugin-transform-runtime": "^6.15.0",
     "babel-preset-latest": "*",
     "babelify": "*",
@@ -33,7 +34,6 @@
     "pug": "2.0.0-beta6",
     "serve-favicon": "^2.3.0",
     "stylus": "*",
-    "vue": "^1.0.28",
     "vueify": "*",
     "watchify": "^3.7.0"
   },
