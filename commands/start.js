@@ -3,15 +3,15 @@
  */
 
 'use strict'
-var fs = require('fs'),
-	express = require('express'),
-	favicon = require('serve-favicon'),
-	locals = require('../lib/locals'),
-	helpers = require('../lib/helpers'),
-	livereload = require('../lib/livereload'),
-	exec = require('child_process').exec;
+const fs = require('fs');
+const express = require('express');
+const favicon = require('serve-favicon');
+const locals = require('../lib/locals');
+const helpers = require('../lib/helpers');
+const livereload = require('../lib/livereload');
+const exec = require('child_process').exec;
 
-module.exports = function(options, home) {
+module.exports = (options, home) => {
 	options = options || { pretty: false };
 	home = home || process.cwd();
 
@@ -47,8 +47,8 @@ module.exports = function(options, home) {
 		if (options.pretty) app.locals.pretty = '\t';
 
 		// serve api
-		app.use(/^\/api\/(.*)$/, (req, res) => {
-			var src = home + '/api/' + req.params[0];
+		if (config.apiPath) app.use(/^\/api\/(.*)$/, (req, res) => {
+			var src = home + '/' + config.apiPath + '/' + req.params[0];
 			fs.exists(src + '.js', exists => {
 				if (!exists) return res.status(404).end('API not found: ' + src);
 				try {
@@ -57,8 +57,10 @@ module.exports = function(options, home) {
 					if (typeof api === 'function') return api(req, res);
 					else return res.json(api);
 				}
-				catch (e) {
-					res.status(500).end(e.toString());
+				catch (err) {
+					res.status(500).end(err.toString());
+					console.error('API error in: ' + src);
+					console.error(err);
 				}
 			});
 		});
@@ -76,7 +78,11 @@ module.exports = function(options, home) {
 				data.req = req;
 				try {
 					res.render(reqPath, data, (err, output) => {
-						if (err) res.status(500).end(err.toString());
+						if (err) {
+							res.status(500).end(err.toString());
+							console.error('View error in: ' + reqPath);
+							console.error(err);
+						}
 						else res.end(output);
 					});
 				}

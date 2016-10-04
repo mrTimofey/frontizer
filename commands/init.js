@@ -19,7 +19,8 @@ module.exports = function(options, home) {
 		viewsPath: 'views',
 		sourcePath: 'assets',
 		destPath: 'assets/compiled',
-		dataPath: 'data'
+		dataPath: 'data',
+		apiPath: 'api'
 	};
 
 	home = home || process.cwd();

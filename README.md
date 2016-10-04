@@ -26,6 +26,7 @@ Compiled assets are placed inside *assets/compiled* directory by default.
 ### Client JavaScript
 
 All client JavaScript is precompiled by Babel with babel-preset-latest.
+You can also use `.vue` files which are processed by `vueify`.
 
 ## Views
 
@@ -57,7 +58,7 @@ View based routing examples:
 
 ## Data
 
-You can provide any data to your views by creating data files. They will be fetched in the same way as view.
+You can provide any data to your views by creating data files. They will be fetched in the same way as views.
 *exports* object fields will be variables in views.
 
 Data shared with corresponding view also includes data from upper levels index files.
@@ -71,10 +72,22 @@ Obviously, *index.js* file will be fetched on every route so you can use it to p
 
 Any duplicated data field names will be overwritten by lower level data.
 
+## API
+
+**EXPERIMENTAL FEATURE**
+
+To create an API function or static JSON you can create an *api* folder in your project root.
+Any js file in this folder will be mapped to route */api/{filename without extension}*.
+
+If `module.exports` is a function than it will be called with request and response objects as
+arguments correspondingly.
+
+If `module.exports` is an object or array than it will be processed as a JSON response.
+
 ## NPM modules
 
 * Request handling: [Express](http://expressjs.com)
-* Templating: [Pug](http://jade-lang.com)
+* Templating: [Pug](https://pugjs.org/)
 * Styles: [Stylus](http://learnboost.github.io/stylus/) with [kouto-swiss](http://kouto-swiss.io)
 * Client JavaScript:
 	[Browserify](http://browserify.org),
@@ -85,4 +98,6 @@ Any duplicated data field names will be overwritten by lower level data.
 	[Livereload](https://github.com/napcs/node-livereload),
 	[Serve-favicon](https://github.com/expressjs/serve-favicon),
 	[jstransformer-stylus](https://github.com/jstransformers/jstransformer-stylus),
-	[ncp](https://github.com/AvianFlu/ncp)
+	[ncp](https://github.com/AvianFlu/ncp),
+	[aliasify](https://github.com/benbria/aliasify)
+* Experimental Vue.js support with [vueify](https://github.com/vuejs/vueify)
