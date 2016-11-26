@@ -2,7 +2,7 @@
  * Application server
  */
 
-'use strict'
+'use strict';
 const fs = require('fs');
 const express = require('express');
 const favicon = require('serve-favicon');
@@ -25,10 +25,6 @@ module.exports = (options, home) => {
 	if (config.appPort) {
 		var app = express();
 
-		app.set('views', home + '/' + config.viewsPath);
-		app.set('view engine', 'pug');
-		app.set('view cache', false);
-
 		// statics
 		let faviconFile = fs.existsSync(home + '/favicon.ico') ?
 			(home + '/favicon.ico') : (__dirname + '/../favicon.ico');
@@ -37,60 +33,68 @@ module.exports = (options, home) => {
 		app.use('/assets', express.static(home + '/' + config.sourcePath));
 		app.use('/compiled', express.static(home + '/' + config.destPath));
 
-		// populate helpers
-		Object.keys(locals).forEach(k => app.locals[k] = locals[k]);
-
-		// allows absolute path in 'extends' for jade
-		app.locals.basedir = app.get('views');
-
-		// indented html output
-		if (options.pretty) app.locals.pretty = '\t';
-
 		// serve api
-		if (config.apiPath) app.use(new RegExp(`^\/${config.apiPath}\/(.*)$`), (req, res) => {
-			var src = home + '/' + config.apiPath + '/' + req.params[0];
-			fs.exists(src + '.js', exists => {
-				if (!exists) return res.status(404).end('API not found: ' + src);
-				try {
-					let api = require(src);
-					delete require.cache[require.resolve(src)];
-					if (typeof api === 'function') return api(req, res);
-					else return res.json(api);
-				}
-				catch (err) {
-					res.status(500).end(err.toString());
-					console.error('API error in: ' + src);
-					console.error(err);
-				}
+		if (config.apiPath) {
+			app.use(new RegExp(`^\/${config.apiRoot || config.apiPath}\/(.*)$`), (req, res) => {
+				var src = home + '/' + config.apiPath + '/' + req.params[0];
+				fs.exists(src + '.js', exists => {
+					if (!exists) return res.status(404).end('API not found: ' + src);
+					try {
+						let api = require(src);
+						delete require.cache[require.resolve(src)];
+						if (typeof api === 'function') return api(req, res);
+						else return res.json(api);
+					}
+					catch (err) {
+						res.status(500).end(err.toString());
+						console.error('API error in: ' + src);
+						console.error(err);
+					}
+				});
 			});
-		});
+		}
 
 		// serve views
-		app.get(/^\/(.*)$/, (req, res) => {
-			var reqPath = req.params[0];
-			if (reqPath === '') reqPath = 'index';
+		if (config.viewsPath) {
+			app.set('views', home + '/' + config.viewsPath);
+			app.set('view engine', 'pug');
+			app.set('view cache', false);
 
-			helpers.lookupData(reqPath, config.dataPath, data => {
-				if (config.livereloadPort)
-					data.__livereload ='<script src="//' +
-						req.hostname + ':' + config.livereloadPort + '/livereload.js"></script>';
-				else data.__livereload = false;
-				data.req = req;
-				try {
-					res.render(reqPath, data, (err, output) => {
-						if (err) {
-							res.status(500).end(err.toString());
-							console.error('View error in: ' + reqPath);
-							console.error(err);
-						}
-						else res.end(output);
-					});
-				}
-				catch (e) {
-					res.status(404).end('Not found');
-				}
+			// populate helpers
+			Object.keys(locals).forEach(k => app.locals[k] = locals[k]);
+
+			// allows absolute path in 'extends' for jade
+			app.locals.basedir = app.get('views');
+
+			// indented html output
+			if (options.pretty) app.locals.pretty = '\t';
+
+			app.get(/^\/(.*)$/, (req, res) => {
+				var reqPath = req.params[0];
+				if (reqPath === '') reqPath = 'index';
+
+				helpers.lookupData(reqPath, config.dataPath, data => {
+					if (config.livereloadPort)
+						data.__livereload ='<script src="//' +
+							req.hostname + ':' + config.livereloadPort + '/livereload.js"></script>';
+					else data.__livereload = false;
+					data.req = req;
+					try {
+						res.render(reqPath, data, (err, output) => {
+							if (err) {
+								res.status(500).end(err.toString());
+								console.error('View error in: ' + reqPath);
+								console.error(err);
+							}
+							else res.end(output);
+						});
+					}
+					catch (e) {
+						res.status(404).end('Not found');
+					}
+				});
 			});
-		});
+		}
 
 		app.listen(config.appPort);
 	}

@@ -74,8 +74,6 @@ Any duplicated data field names will be overwritten by lower level data.
 
 ## API
 
-**EXPERIMENTAL FEATURE**
-
 To create an API function or static JSON you can create an *api* folder in your project root.
 Any js file in this folder will be mapped to route */api/{filename without extension}*.
 

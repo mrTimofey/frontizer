@@ -32,6 +32,10 @@ frontizer init [options]
 	--vp, --viewsPath <path>         views path (default: views)
 	
 	--dataPath <path>                data files path (default: data)
+	
+	--apiPath <path>                 api handlers path (default: api)
+	
+	--apiRoot <root>                 api routes prefix (same as apiPath by default)
 
 frontizer start [options]
 
@@ -85,6 +89,12 @@ else
 					break;
 				case 'dataPath':
 					options.dataPath = args.shift().trim();
+					break;
+				case 'apiPath':
+					options.apiPath = args.shift().trim();
+					break;
+				case 'apiRoot':
+					options.apiRoot = args.shift().trim();
 					break;
 			}
 			else

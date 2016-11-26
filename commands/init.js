@@ -3,9 +3,10 @@
  */
 
 'use strict'
-var fs = require('fs'),
+const fs = require('fs');
+
 	// folders to create on initialization
-	folders = [],
+var folders = [],
 	// files to create on initialization
 	files = [];
 
@@ -25,6 +26,9 @@ module.exports = function(options, home) {
 
 	home = home || process.cwd();
 	if (options) Object.keys(config).forEach(k => { config[k] = options[k] || config[k] });
+	for (let optional of ['apiRoot']) {
+		if (options[optional]) config[optional] = options[optional];
+	}
 
 	// sources
 	['styles', 'js'].forEach(k => {
