@@ -47,7 +47,7 @@ module.exports = (options, home) => {
 		if (options.pretty) app.locals.pretty = '\t';
 
 		// serve api
-		if (config.apiPath) app.use(/^\/api\/(.*)$/, (req, res) => {
+		if (config.apiPath) app.use(new RegExp(`^\/${config.apiPath}\/(.*)$`), (req, res) => {
 			var src = home + '/' + config.apiPath + '/' + req.params[0];
 			fs.exists(src + '.js', exists => {
 				if (!exists) return res.status(404).end('API not found: ' + src);
