@@ -30,9 +30,10 @@ module.exports = (options, home) => {
 			(home + '/favicon.ico') : (__dirname + '/../favicon.ico');
 
 		// cors
-		app.use((req, res) => {
+		app.use((req, res, next) => {
 			res.header('Access-Control-Allow-Origin', '*');
 			res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+			next();
 		});
 
 		app.use(favicon(faviconFile));
