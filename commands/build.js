@@ -2,7 +2,7 @@
  * Building a static site output
  */
 
-'use strict'
+'use strict';
 var fs = require('fs'),
 	path = require('path'),
 	pug = require('pug'),
@@ -92,11 +92,11 @@ module.exports = function(_options, home) {
 
 	[{
 		files: config.js,
-		command: __dirname + '/../node_modules/.bin/browserify ' + config.sourcePath + '/js/{input} ' +
+		command: 'NODE_ENV=production ' + __dirname + '/../node_modules/.bin/browserify ' + config.sourcePath + '/js/{input} ' +
 			helpers.browserifyArgs.join(' ') + ' -o build/compiled/{output}.js'
 	}, {
 		files: config.styles,
-		command: __dirname + '/../node_modules/.bin/stylus ' + config.sourcePath + '/styles/{input} ' +
+		command: 'NODE_ENV=production ' + __dirname + '/../node_modules/.bin/stylus ' + config.sourcePath + '/styles/{input} ' +
 			helpers.stylusArgs.join(' ') + ' -o build/compiled/{output}.css'
 	}].forEach(build => {
 		var command = build.command;
