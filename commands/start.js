@@ -29,6 +29,12 @@ module.exports = (options, home) => {
 		let faviconFile = fs.existsSync(home + '/favicon.ico') ?
 			(home + '/favicon.ico') : (__dirname + '/../favicon.ico');
 
+		// cors
+		app.use((req, res) => {
+			res.header('Access-Control-Allow-Origin', '*');
+			res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+		});
+
 		app.use(favicon(faviconFile));
 		app.use('/assets', express.static(home + '/' + config.sourcePath));
 		app.use('/compiled', express.static(home + '/' + config.destPath));
