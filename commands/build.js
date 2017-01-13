@@ -3,7 +3,7 @@
  */
 
 'use strict';
-var fs = require('fs'),
+const fs = require('fs'),
 	path = require('path'),
 	pug = require('pug'),
 	locals = require('../lib/locals'),
@@ -44,7 +44,7 @@ module.exports = function(_options, home) {
 	(function scan(parents) {
 		parents = parents || [];
 
-		var folder = home + '/' + config.viewsPath + (parents.length ? ('/' + parents.join('/')) : '');
+		const folder = home + '/' + config.viewsPath + (parents.length ? ('/' + parents.join('/')) : '');
 
 		for (let file of fs.readdirSync(folder)) {
 			let viewFullPath = folder + '/' + file,
@@ -99,9 +99,9 @@ module.exports = function(_options, home) {
 		command: 'NODE_ENV=production ' + __dirname + '/../node_modules/.bin/stylus ' + config.sourcePath + '/styles/{input} ' +
 			helpers.stylusArgs.join(' ') + ' -o build/compiled/{output}.css'
 	}].forEach(build => {
-		var command = build.command;
+		const command = build.command;
 		build.files.forEach(file => {
-			var builder = exec(command
+			const builder = exec(command
 				.replace('{input}', file)
 				.replace('{output}', file.split('.').slice(0, -1)));
 

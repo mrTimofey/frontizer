@@ -34,6 +34,7 @@
     "pug": "2.0.0-beta6",
     "serve-favicon": "^2.3.0",
     "stylus": "*",
+    "through": "^2.3.8",
     "vueify": "*",
     "watchify": "^3.7.0"
   },

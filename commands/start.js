@@ -3,19 +3,19 @@
  */
 
 'use strict';
-const fs = require('fs');
-const express = require('express');
-const favicon = require('serve-favicon');
-const locals = require('../lib/locals');
-const helpers = require('../lib/helpers');
-const livereload = require('../lib/livereload');
-const exec = require('child_process').exec;
+const fs = require('fs'),
+	express = require('express'),
+	favicon = require('serve-favicon'),
+	locals = require('../lib/locals'),
+	helpers = require('../lib/helpers'),
+	livereload = require('../lib/livereload'),
+	exec = require('child_process').exec;
 
 module.exports = (options, home) => {
 	options = options || { pretty: false };
 	home = home || process.cwd();
 
-	var config = require(home + '/config.json'),
+	let config = require(home + '/config.json'),
 		browserifyArgs = config.browserify || [],
 		stylusArgs = config.stylus || [];
 
@@ -23,18 +23,20 @@ module.exports = (options, home) => {
 
 	// APP SERVER
 	if (config.appPort) {
-		var app = express();
-
-		// statics
-		let faviconFile = fs.existsSync(home + '/favicon.ico') ?
-			(home + '/favicon.ico') : (__dirname + '/../favicon.ico');
+		const app = express();
 
 		// cors
-		app.use((req, res, next) => {
-			res.header('Access-Control-Allow-Origin', '*');
-			res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-			next();
-		});
+		if (config.cors) {
+			app.use((req, res, next) => {
+				res.header('Access-Control-Allow-Origin', '*');
+				res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+				next();
+			});
+		}
+
+		// statics
+		const faviconFile = fs.existsSync(home + '/favicon.ico') ?
+			(home + '/favicon.ico') : (__dirname + '/../favicon.ico');
 
 		app.use(favicon(faviconFile));
 		app.use('/assets', express.static(home + '/' + config.sourcePath));
@@ -43,7 +45,7 @@ module.exports = (options, home) => {
 		// serve api
 		if (config.apiPath) {
 			app.use(new RegExp(`^\/${config.apiRoot || config.apiPath}\/(.*)$`), (req, res) => {
-				var src = home + '/' + config.apiPath + '/' + req.params[0];
+				const src = home + '/' + config.apiPath + '/' + req.params[0];
 				fs.exists(src + '.js', exists => {
 					if (!exists) return res.status(404).end('API not found: ' + src);
 					try {
@@ -77,7 +79,7 @@ module.exports = (options, home) => {
 			if (options.pretty) app.locals.pretty = '\t';
 
 			app.get(/^\/(.*)$/, (req, res) => {
-				var reqPath = req.params[0];
+				let reqPath = req.params[0];
 				if (reqPath === '') reqPath = 'index';
 
 				helpers.lookupData(reqPath, config.dataPath, data => {
@@ -125,9 +127,9 @@ module.exports = (options, home) => {
 			stylusArgs.join(' ') +
 			' -m --sourcemap-root ' + config.sourcePath + ' -w -o ' + config.destPath + '/{output}.css'
 	}].forEach(watch => {
-		var command = watch.command;
+		const command = watch.command;
 		watch.files.forEach(file => {
-			var watcher = exec(command
+			const watcher = exec(command
 				.replace('{input}', file)
 				.replace('{output}', file.split('.').slice(0, -1)));
 

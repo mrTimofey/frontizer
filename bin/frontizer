@@ -36,6 +36,8 @@ frontizer init [options]
 	--apiPath <path>                 api handlers path (default: api)
 	
 	--apiRoot <root>                 api routes prefix (same as apiPath by default)
+	
+	--disable-cors                   disable CORS (enabled by default)
 
 frontizer start [options]
 
@@ -95,6 +97,9 @@ else
 					break;
 				case 'apiRoot':
 					options.apiRoot = args.shift().trim();
+					break;
+				case 'disable-cors':
+					options.cors = false
 					break;
 			}
 			else

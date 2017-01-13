@@ -2,11 +2,11 @@
  * New project initialize
  */
 
-'use strict'
+'use strict';
 const fs = require('fs');
 
 	// folders to create on initialization
-var folders = [],
+let folders = [],
 	// files to create on initialization
 	files = [];
 
@@ -21,7 +21,8 @@ module.exports = function(options, home) {
 		sourcePath: 'assets',
 		destPath: 'assets/compiled',
 		dataPath: 'data',
-		apiPath: 'api'
+		apiPath: 'api',
+		cors: true
 	};
 
 	home = home || process.cwd();
@@ -51,7 +52,7 @@ module.exports = function(options, home) {
 	});
 
 	// config fields containing folders to create
-	var configFolders = ['sourcePath', 'destPath'];
+	let configFolders = ['sourcePath', 'destPath'];
 
 	// express app settings
 	if (config.appPort) {
