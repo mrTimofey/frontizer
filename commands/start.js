@@ -110,7 +110,7 @@ module.exports = (options, home) => {
 
 	// LIVERELOAD SERVER
 
-	if (config.livereloadPort) livereload(config.livereloadPort, home + '/' + config.destPath);
+	if (config.livereloadPort) livereload(config.livereloadPort, home + '/' + config.destPath, config.livereloadServerParams);
 
 	// WATCH SOURCES
 
