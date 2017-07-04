@@ -92,11 +92,11 @@ module.exports = function(_options, home) {
 
 	[{
 		files: config.js,
-		command: 'NODE_ENV=production ' + __dirname + '/../node_modules/.bin/browserify ' + config.sourcePath + '/js/{input} ' +
+		command: __dirname + '/../node_modules/.bin/cross-env NODE_ENV=production ' + __dirname + '/../node_modules/.bin/browserify ' + config.sourcePath + '/js/{input} ' +
 			helpers.browserifyArgs.join(' ') + ' -o build/compiled/{output}.js'
 	}, {
 		files: config.styles,
-		command: 'NODE_ENV=production ' + __dirname + '/../node_modules/.bin/stylus ' + config.sourcePath + '/styles/{input} ' +
+		command: __dirname + '/../node_modules/.bin/cross-env NODE_ENV=production ' + __dirname + '/../node_modules/.bin/stylus ' + config.sourcePath + '/styles/{input} ' +
 			helpers.stylusArgs.join(' ') + ' -o build/compiled/{output}.css'
 	}].forEach(build => {
 		const command = build.command;

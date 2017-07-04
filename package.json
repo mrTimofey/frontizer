@@ -26,6 +26,7 @@
     "babel-preset-latest": "*",
     "babelify": "*",
     "browserify": "^13.1.0",
+    "cross-env": "^5.0.1",
     "express": "^4.14.0",
     "jstransformer-stylus": "*",
     "kouto-swiss": "*",
