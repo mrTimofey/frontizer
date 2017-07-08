@@ -92,12 +92,15 @@ module.exports = function(_options, home) {
 
 	[{
 		files: config.js,
-		command: __dirname + '/../node_modules/.bin/cross-env NODE_ENV=production ' + __dirname + '/../node_modules/.bin/browserify ' + config.sourcePath + '/js/{input} ' +
-			helpers.browserifyArgs.join(' ') + ' -o build/compiled/{output}.js'
+		command: helpers.resolveBin('cross-env') + ' NODE_ENV=production ' +
+			helpers.resolveBin('browserify')  +' ' + config.sourcePath + '/js/{input} ' +
+			helpers.browserifyArgs.join(' ') + ' | ' +
+			helpers.resolveBin('uglifyjs') + ' -c > build/compiled/{output}.js'
 	}, {
 		files: config.styles,
-		command: __dirname + '/../node_modules/.bin/cross-env NODE_ENV=production ' + __dirname + '/../node_modules/.bin/stylus ' + config.sourcePath + '/styles/{input} ' +
-			helpers.stylusArgs.join(' ') + ' -o build/compiled/{output}.css'
+		command: helpers.resolveBin('cross-env') + ' NODE_ENV=production ' +
+			helpers.resolveBin('stylus') + ' ' + config.sourcePath + '/styles/{input} ' +
+			helpers.stylusArgs.join(' ') + ' -c -o build/compiled/{output}.css'
 	}].forEach(build => {
 		const command = build.command;
 		build.files.forEach(file => {

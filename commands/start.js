@@ -116,13 +116,13 @@ module.exports = (options, home) => {
 
 	[{
 		files: config.js,
-		command: __dirname + '/../node_modules/.bin/watchify ' + config.sourcePath + '/js/{input} ' +
+		command: helpers.resolveBin('watchify') + ' ' + config.sourcePath + '/js/{input} ' +
 			helpers.browserifyArgs.join(' ') +
 			browserifyArgs.join(' ') +
 			' -d -o ' + config.destPath + '/{output}.js'
 	}, {
 		files: config.styles,
-		command: __dirname + '/../node_modules/.bin/stylus ' + config.sourcePath + '/styles/{input} ' +
+		command: helpers.resolveBin('stylus') + ' ' + config.sourcePath + '/styles/{input} ' +
 			helpers.stylusArgs.join(' ') +
 			stylusArgs.join(' ') +
 			' -m --sourcemap-root ' + config.sourcePath + ' -w -o ' + config.destPath + '/{output}.css'
