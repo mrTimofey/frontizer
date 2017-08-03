@@ -1,50 +1,50 @@
 {
-  "name": "frontizer",
-  "version": "1.2.1",
-  "description": "Effective frontend development tool",
-  "keywords": [
-    "frontend",
-    "build",
-    "tool",
-    "dev",
-    "stylus",
-    "es6",
-    "vue",
-    "babel"
-  ],
-  "homepage": "https://github.com/mrTimofey/frontizer",
-  "license": "ISC",
-  "repository": "https://github.com/mrTimofey/frontizer.git",
-  "author": "Timofey Tiunov <timoxa17@gmail.com>",
-  "engines": {
-    "node": ">=5.2.0",
-    "npm": ">=3.5.3"
-  },
-  "dependencies": {
-    "aliasify": "^2.0.0",
-    "babel-plugin-transform-runtime": "^6.15.0",
-    "babel-preset-latest": "*",
-    "babelify": "*",
-    "browserify": "^14.4.0",
-    "cross-env": "^5.0.1",
-    "express": "^4.14.0",
-    "jstransformer-stylus": "*",
-    "kouto-swiss": "*",
-    "livereload": "^0.6.2",
-    "ncp": "^2.0.0",
-    "pug": "^2.0.0-rc.2",
-    "serve-favicon": "^2.3.0",
-    "stylus": "*",
-    "through": "^2.3.8",
-    "uglify-js": "^3.0.27",
-    "vueify": "*",
-    "watchify": "^3.7.0"
-  },
-  "preferGlobal": true,
-  "bin": {
-    "frontizer": "./bin/frontizer"
-  },
-  "devDependencies": {
-    "babel-preset-stage-2": "^6.22.0"
-  }
+	"name": "frontizer",
+	"version": "1.2.1",
+	"description": "Effective frontend development tool",
+	"keywords": [
+		"frontend",
+		"build",
+		"tool",
+		"dev",
+		"stylus",
+		"es6",
+		"vue",
+		"babel"
+	],
+	"homepage": "https://github.com/mrTimofey/frontizer",
+	"license": "ISC",
+	"repository": "https://github.com/mrTimofey/frontizer.git",
+	"author": "Timofey Tiunov <timoxa17@gmail.com>",
+	"engines": {
+		"node": ">=5.2.0",
+		"npm": ">=3.5.3"
+	},
+	"dependencies": {
+		"aliasify": "^2.0.0",
+		"babel-plugin-transform-runtime": "^6.15.0",
+		"babel-preset-latest": "*",
+		"babelify": "*",
+		"browserify": "^14.4.0",
+		"cross-env": "^5.0.1",
+		"express": "^4.14.0",
+		"jstransformer-stylus": "*",
+		"kouto-swiss": "*",
+		"livereload": "^0.6.2",
+		"ncp": "^2.0.0",
+		"pug": "^2.0.0-rc.2",
+		"serve-favicon": "^2.3.0",
+		"stylus": "*",
+		"through": "^2.3.8",
+		"uglify-js": "^3.0.27",
+		"vueify": "*",
+		"watchify": "^3.7.0"
+	},
+	"preferGlobal": true,
+	"bin": {
+		"frontizer": "./bin/frontizer"
+	},
+	"devDependencies": {
+		"babel-preset-stage-2": "^6.22.0"
+	}
 }
