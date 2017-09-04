@@ -1,1 +1,112 @@
-#!/usr/bin/env node'use strict';var usage = `Commands:frontizer [help]    Outputs this help textfrontizer init [options]    Creates a new project with needed file structure and source files    --app, --appPort <port>          application server port number (default: 3000, disabled: 0)    --lr,  --livereloadPort <port>   livereload server port (default: 35729, disabled: 0)    --styles <files>                 Stylus and JavaScript files to be compiled separated    --js <files>                     with whitespaces                                         - use quotes to list multiple files                                         - each file will be compiled to css/js file with                                           the same name and included in your application                                     defaults:                                         --js main.es6                                         --styles main.styl	--sp, --sourcePath <path>        path to source files (default: assets)	--dp, --destPath <path>          compiled assets path (default: assets/compiled)		--vp, --viewsPath <path>         views path (default: views)		--dataPath <path>                data files path (default: data)		--apiPath <path>                 api handlers path (default: api)		--apiRoot <root>                 api routes prefix (same as apiPath by default)		--disable-cors                   disable CORS (enabled by default)frontizer start [options]    Runs your project    --pretty     create html files with indentation charactersfrontizer build [--pretty]    Creates a fully static build of your project.    --pretty     create html files with indentation characters`;var args = process.argv.slice(2),	action = args.shift() || 'help',	index = require('../index'),	options = {};if (action === 'help') console.info(usage);else	if (!index[action]) console.error('Unknown action ' + action);	else {		while (args.length) {			let arg = args.shift().split('-').join('');			if (action === 'init') switch (arg) {				case 'app':				case 'appPort':					options.appPort = parseInt(args.shift());					break;				case 'livereloadPort':				case 'lr':					options.livereloadPort = parseInt(args.shift());					break;				case 'styles':				case 'js':					options[arg] = args.shift().split(' ').filter(s => s.length);					break;				case 'sp':				case 'sourcePath':					options.sourcePath = args.shift().trim();					break;				case 'dp':				case 'destPath':					options.destPath = args.shift().trim();					break;				case 'vp':				case 'viewsPath':					options.viewsPath = args.shift().trim();					break;				case 'dataPath':					options.dataPath = args.shift().trim();					break;				case 'apiPath':					options.apiPath = args.shift().trim();					break;				case 'apiRoot':					options.apiRoot = args.shift().trim();					break;				case 'disable-cors':					options.cors = false					break;			}			else				if (action === 'build' || action === 'start') {					if (arg === 'pretty') options.pretty = true;				}		}		index[action](options);	}
+#!/usr/bin/env node
+'use strict';
+
+var usage = `
+Commands:
+
+frontizer [help]
+
+    Outputs this help text
+
+frontizer init [options]
+
+    Creates a new project with needed file structure and source files
+
+    --app, --appPort <port>          application server port number (default: 3000, disabled: 0)
+
+    --lr,  --livereloadPort <port>   livereload server port (default: 35729, disabled: 0)
+
+    --styles <files>                 Stylus and JavaScript files to be compiled separated
+    --js <files>                     with whitespaces
+                                         - use quotes to list multiple files
+                                         - each file will be compiled to css/js file with
+                                           the same name and included in your application
+                                     defaults:
+                                         --js main.es6
+                                         --styles main.styl
+
+	--sp, --sourcePath <path>        path to source files (default: assets)
+
+	--dp, --destPath <path>          compiled assets path (default: assets/compiled)
+	
+	--vp, --viewsPath <path>         views path (default: views)
+	
+	--dataPath <path>                data files path (default: data)
+	
+	--apiPath <path>                 api handlers path (default: api)
+	
+	--apiRoot <root>                 api routes prefix (same as apiPath by default)
+	
+	--disable-cors                   disable CORS (enabled by default)
+
+frontizer start [options]
+
+    Runs your project
+
+    --pretty     create html files with indentation characters
+
+frontizer build [--pretty]
+
+    Creates a fully static build of your project.
+
+    --pretty     create html files with indentation characters
+`;
+
+var args = process.argv.slice(2),
+	action = args.shift() || 'help',
+	index = require('../index'),
+	options = {};
+
+if (action === 'help') console.info(usage);
+else
+	if (!index[action]) console.error('Unknown action ' + action);
+	else {
+		while (args.length) {
+			let arg = args.shift().split('-').join('');
+
+			if (action === 'init') switch (arg) {
+				case 'app':
+				case 'appPort':
+					options.appPort = parseInt(args.shift());
+					break;
+				case 'livereloadPort':
+				case 'lr':
+					options.livereloadPort = parseInt(args.shift());
+					break;
+				case 'styles':
+				case 'js':
+					options[arg] = args.shift().split(' ').filter(s => s.length);
+					break;
+				case 'sp':
+				case 'sourcePath':
+					options.sourcePath = args.shift().trim();
+					break;
+				case 'dp':
+				case 'destPath':
+					options.destPath = args.shift().trim();
+					break;
+				case 'vp':
+				case 'viewsPath':
+					options.viewsPath = args.shift().trim();
+					break;
+				case 'dataPath':
+					options.dataPath = args.shift().trim();
+					break;
+				case 'apiPath':
+					options.apiPath = args.shift().trim();
+					break;
+				case 'apiRoot':
+					options.apiRoot = args.shift().trim();
+					break;
+				case 'disable-cors':
+					options.cors = false
+					break;
+			}
+			else
+				if (action === 'build' || action === 'start') {
+					if (arg === 'pretty') options.pretty = true;
+				}
+		}
+
+		index[action](options);
+	}
